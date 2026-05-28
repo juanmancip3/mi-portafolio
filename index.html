@@ -4,24 +4,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Juan Diego Mancipe · UX/UI Designer</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Juan Diego Mancipe · Diseñador UX/UI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Pinyon+Script&display=swap"
     rel="stylesheet">
 
   <style>
     :root {
-      --smoky: #11120D;
-      --olive: #565449;
-      --bone: #D8CFBC;
-      --white: #FFFBF4;
-      --olive-lt: #7a7568;
-      --olive-xl: #a09890;
-      --border: rgba(86, 84, 73, 0.16);
-      --border-d: rgba(86, 84, 73, 0.22);
+      --ivory: #FFFBF5;
+      --ivory-d: #F4EFE6;
+      --ink: #2E3638;
+      --slate: #424B4D;
+      --slate-lt: #6c7577;
+      --slate-xl: #9aa1a2;
+      --blue: #0D47A1;
+      --blue-lt: #1c5dc7;
+      --border: rgba(46, 54, 56, 0.12);
+      --border-d: rgba(46, 54, 56, 0.20);
+      --blue-soft: rgba(13, 71, 161, 0.08);
     }
 
     * {
@@ -35,24 +37,45 @@
     }
 
     body {
-      background: var(--white);
-      color: var(--smoky);
-      font-family: 'DM Sans', sans-serif;
+      background: var(--ivory);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
     ::-webkit-scrollbar {
-      width: 3px;
+      width: 4px;
     }
 
     ::-webkit-scrollbar-track {
-      background: var(--white);
+      background: var(--ivory);
     }
 
     ::-webkit-scrollbar-thumb {
-      background: var(--olive);
+      background: var(--blue);
       border-radius: 2px;
+    }
+
+    ::selection {
+      background: var(--blue);
+      color: var(--ivory);
+    }
+
+    /* ASTERISK — firma visual del CV */
+    .aster {
+      display: inline-block;
+      color: var(--blue);
+      line-height: 0;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .aster-spin {
+      animation: spin 22s linear infinite;
     }
 
     /* REVEAL */
@@ -67,62 +90,24 @@
       transform: translateY(0);
     }
 
-    .d1 {
-      transition-delay: .08s
-    }
-
-    .d2 {
-      transition-delay: .16s
-    }
-
-    .d3 {
-      transition-delay: .24s
-    }
-
-    .d4 {
-      transition-delay: .32s
-    }
-
-    .d5 {
-      transition-delay: .40s
-    }
-
-    .d6 {
-      transition-delay: .48s
-    }
+    .d1 { transition-delay: .08s }
+    .d2 { transition-delay: .16s }
+    .d3 { transition-delay: .24s }
+    .d4 { transition-delay: .32s }
+    .d5 { transition-delay: .40s }
+    .d6 { transition-delay: .48s }
 
     /* HERO ANIMS */
     @keyframes up {
-      from {
-        opacity: 0;
-        transform: translateY(34px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(34px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .a1 {
-      animation: up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.06s both
-    }
-
-    .a2 {
-      animation: up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.20s both
-    }
-
-    .a3 {
-      animation: up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.34s both
-    }
-
-    .a4 {
-      animation: up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.48s both
-    }
-
-    .a5 {
-      animation: up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.62s both
-    }
+    .a1 { animation: up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.06s both }
+    .a2 { animation: up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.20s both }
+    .a3 { animation: up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.34s both }
+    .a4 { animation: up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.48s both }
+    .a5 { animation: up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.62s both }
 
     /* NAV */
     nav {
@@ -131,15 +116,15 @@
       left: 0;
       right: 0;
       z-index: 100;
-      height: 60px;
-      background: rgba(255, 251, 244, 0.80);
+      height: 62px;
+      background: rgba(255, 251, 245, 0.82);
       backdrop-filter: saturate(180%) blur(20px);
       -webkit-backdrop-filter: saturate(180%) blur(20px);
       border-bottom: 1px solid var(--border);
     }
 
     .nav-in {
-      max-width: 1120px;
+      max-width: 1160px;
       margin: 0 auto;
       padding: 0 28px;
       height: 100%;
@@ -149,17 +134,20 @@
     }
 
     .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 18px;
-      letter-spacing: -0.03em;
-      color: var(--smoky);
+      font-family: 'Archivo', sans-serif;
+      font-weight: 900;
+      font-size: 19px;
+      letter-spacing: -0.04em;
+      color: var(--ink);
       text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 2px;
     }
 
-    .nav-logo em {
-      color: var(--olive);
-      font-style: normal;
+    .nav-logo .ast-sm {
+      width: 13px;
+      height: 13px;
     }
 
     .nav-links {
@@ -170,14 +158,14 @@
 
     .nl {
       font-size: 13px;
-      font-weight: 400;
-      color: var(--olive-lt);
+      font-weight: 500;
+      color: var(--slate-lt);
       text-decoration: none;
       transition: color 0.2s;
     }
 
     .nl:hover {
-      color: var(--smoky);
+      color: var(--blue);
     }
 
     .hbtn {
@@ -193,29 +181,24 @@
     .hbtn span {
       width: 20px;
       height: 1.5px;
-      background: var(--smoky);
+      background: var(--ink);
       display: block;
       transition: all 0.3s;
     }
 
     @media(max-width:768px) {
-      .nav-links {
-        display: none
-      }
-
-      .hbtn {
-        display: flex
-      }
+      .nav-links { display: none }
+      .hbtn { display: flex }
     }
 
     /* MOB MENU */
     #mob {
       position: fixed;
-      top: 60px;
+      top: 62px;
       left: 0;
       right: 0;
       z-index: 99;
-      background: rgba(255, 251, 244, 0.96);
+      background: rgba(255, 251, 245, 0.97);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
       max-height: 0;
@@ -225,7 +208,7 @@
     }
 
     #mob.open {
-      max-height: 220px;
+      max-height: 280px;
       opacity: 1;
     }
 
@@ -233,136 +216,177 @@
       display: block;
       padding: 14px 28px;
       font-size: 15px;
-      color: var(--olive);
+      font-weight: 500;
+      color: var(--slate);
       text-decoration: none;
       border-bottom: 1px solid var(--border);
       transition: color 0.2s;
     }
 
     .mlink:hover {
-      color: var(--smoky);
+      color: var(--blue);
     }
 
     /* LABEL */
     .lbl {
       font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
+      font-weight: 700;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--olive-xl);
+      color: var(--blue);
     }
 
     /* BUTTONS */
     .btn-dk {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      background: var(--smoky);
-      color: var(--white);
-      font-family: 'DM Sans', sans-serif;
+      gap: 8px;
+      background: var(--blue);
+      color: var(--ivory);
+      font-family: 'Inter', sans-serif;
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 600;
       padding: 12px 22px;
-      border-radius: 100px;
+      border-radius: 8px;
       text-decoration: none;
       transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
     }
 
     .btn-dk:hover {
-      background: #1f2018;
+      background: var(--blue-lt);
       transform: translateY(-1px);
-      box-shadow: 0 6px 22px rgba(17, 18, 13, .18);
+      box-shadow: 0 8px 24px rgba(13, 71, 161, .22);
     }
 
     .btn-gh {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
       background: transparent;
-      color: var(--smoky);
-      font-family: 'DM Sans', sans-serif;
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 600;
       padding: 11px 22px;
-      border-radius: 100px;
+      border-radius: 8px;
       text-decoration: none;
-      border: 1px solid var(--border-d);
-      transition: border-color 0.25s, background 0.25s, transform 0.2s;
+      border: 1.5px solid var(--border-d);
+      transition: border-color 0.25s, background 0.25s, transform 0.2s, color 0.25s;
     }
 
     .btn-gh:hover {
-      border-color: var(--olive);
-      background: rgba(86, 84, 73, .05);
+      border-color: var(--blue);
+      color: var(--blue);
+      background: var(--blue-soft);
       transform: translateY(-1px);
     }
 
     /* HERO */
     .hero-wrap {
-      max-width: 1120px;
+      max-width: 1160px;
       margin: 0 auto;
-      padding: 128px 28px 80px;
-      min-height: 100svh;
+      padding: 120px 28px 56px;
+      min-height: auto;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      position: relative;
+    }
+
+    .hero-aster {
+      position: absolute;
+      top: 96px;
+      right: 28px;
+      width: clamp(80px, 12vw, 150px);
+      height: clamp(80px, 12vw, 150px);
+      z-index: 0;
+    }
+
+    @media(max-width:768px) {
+      .hero-aster {
+        width: 64px;
+        height: 64px;
+        top: 80px;
+      }
     }
 
     .hero-h {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      line-height: 0.93;
-      letter-spacing: -0.036em;
-      font-size: clamp(54px, 9.8vw, 110px);
-      color: var(--smoky);
+      font-family: 'Archivo', sans-serif;
+      font-weight: 900;
+      line-height: 0.90;
+      letter-spacing: -0.045em;
+      font-size: clamp(56px, 11vw, 132px);
+      color: var(--ink);
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-h .ol {
-      color: var(--olive);
+      color: var(--blue);
+    }
+
+    .script-c {
+      font-family: 'Pinyon Script', cursive;
+      font-weight: 400;
+      font-style: normal;
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 1.32em;
+      line-height: 0;
+      display: inline-block;
+      transform: translateY(0.07em);
+      margin: 0 -0.02em 0 -0.12em;
+    }
+
+    .hero-role {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 800;
+      font-size: clamp(15px, 2.2vw, 22px);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--slate);
+      margin-top: 20px;
     }
 
     /* MARQUEE */
     .mq-wrap {
       overflow: hidden;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 11px 0;
-      margin-top: 52px;
+      border-top: 1.5px solid var(--border-d);
+      border-bottom: 1.5px solid var(--border-d);
+      padding: 12px 0;
+      margin-top: 50px;
     }
 
     .mq-track {
       display: flex;
-      gap: 44px;
+      gap: 40px;
       white-space: nowrap;
-      animation: marquee 24s linear infinite;
+      animation: marquee 26s linear infinite;
     }
 
     @keyframes marquee {
-      from {
-        transform: translateX(0)
-      }
-
-      to {
-        transform: translateX(-50%)
-      }
+      from { transform: translateX(0) }
+      to { transform: translateX(-50%) }
     }
 
     .mq-item {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.16em;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--olive-xl);
+      color: var(--slate-lt);
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
       flex-shrink: 0;
     }
 
     .mq-dot {
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-      background: var(--olive-xl);
+      width: 5px;
+      height: 5px;
+      background: var(--blue);
+      flex-shrink: 0;
     }
 
     /* STATS */
@@ -372,43 +396,46 @@
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 12px;
       overflow: hidden;
       margin-top: 28px;
     }
 
     .stat-c {
-      background: var(--white);
-      padding: 22px 26px;
+      background: var(--ivory);
+      padding: 24px 26px;
+      transition: background 0.25s;
+    }
+
+    .stat-c:hover {
+      background: var(--ivory-d);
     }
 
     .stat-n {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: clamp(26px, 4vw, 40px);
-      letter-spacing: -0.03em;
+      font-family: 'Archivo', sans-serif;
+      font-weight: 900;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: -0.04em;
       line-height: 1;
-      color: var(--smoky);
+      color: var(--blue);
     }
 
     .stat-l {
       font-size: 10px;
-      font-weight: 400;
-      letter-spacing: 0.07em;
+      font-weight: 500;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--olive-lt);
-      margin-top: 4px;
+      color: var(--slate-lt);
+      margin-top: 6px;
     }
 
     @media(max-width:600px) {
-      .stat-grid {
-        grid-template-columns: repeat(2, 1fr)
-      }
+      .stat-grid { grid-template-columns: repeat(2, 1fr) }
     }
 
-    /* PROJECTS SECTION */
+    /* SECTION WRAP */
     .sec-wrap {
-      max-width: 1120px;
+      max-width: 1160px;
       margin: 0 auto;
       padding: 0 28px;
     }
@@ -416,48 +443,19 @@
     .pgrid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 10px;
+      gap: 12px;
       margin-top: 44px;
     }
 
-    .pa {
-      grid-column: span 7;
-      aspect-ratio: 16/10;
-    }
-
-    .pb {
-      grid-column: span 5;
-      aspect-ratio: 4/3;
-    }
-
-    .pc {
-      grid-column: span 4;
-      aspect-ratio: 1;
-    }
-
-    .pd {
-      grid-column: span 8;
-      aspect-ratio: 16/9;
-    }
-
-    .pe {
-      grid-column: span 4;
-      aspect-ratio: 1;
-    }
-
-    .pf {
-      grid-column: span 8;
-      aspect-ratio: 16/9;
-    }
+    .pa { grid-column: span 7; aspect-ratio: 16/10; }
+    .pb { grid-column: span 5; aspect-ratio: 4/3; }
+    .pc { grid-column: span 4; aspect-ratio: 1; }
+    .pd { grid-column: span 8; aspect-ratio: 16/9; }
+    .pe { grid-column: span 4; aspect-ratio: 1; }
+    .pf { grid-column: span 8; aspect-ratio: 16/9; }
 
     @media(max-width:768px) {
-
-      .pa,
-      .pb,
-      .pc,
-      .pd,
-      .pe,
-      .pf {
+      .pa, .pb, .pc, .pd, .pe, .pf {
         grid-column: span 12;
         aspect-ratio: 4/3;
       }
@@ -467,9 +465,10 @@
     .card {
       position: relative;
       overflow: hidden;
-      border-radius: 14px;
+      border-radius: 12px;
       cursor: pointer;
-      background: var(--bone);
+      background: var(--ivory-d);
+      border: 1px solid var(--border);
     }
 
     .card img,
@@ -491,23 +490,24 @@
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 20px 16px 15px;
-      background: linear-gradient(to top, rgba(17, 18, 13, .7) 0%, transparent 100%);
+      padding: 22px 16px 15px;
+      background: linear-gradient(to top, rgba(46, 54, 56, .78) 0%, transparent 100%);
       transition: opacity 0.25s;
     }
 
     .ctitle {
-      font-family: 'Syne', sans-serif;
-      font-size: 14px;
+      font-family: 'Archivo', sans-serif;
+      font-size: 15px;
       font-weight: 700;
-      color: var(--white);
+      color: var(--ivory);
       line-height: 1.2;
+      letter-spacing: -0.01em;
     }
 
     .cover {
       position: absolute;
       inset: 0;
-      background: rgba(17, 18, 13, .62);
+      background: rgba(13, 71, 161, .80);
       backdrop-filter: blur(1.5px);
       opacity: 0;
       display: flex;
@@ -527,10 +527,10 @@
 
     .cdesc {
       font-size: 12px;
-      font-weight: 300;
-      color: var(--bone);
+      font-weight: 400;
+      color: rgba(255, 251, 245, .9);
       line-height: 1.6;
-      margin-top: 6px;
+      margin-top: 7px;
     }
 
     /* PILL */
@@ -539,56 +539,35 @@
       align-items: center;
       gap: 5px;
       font-size: 10px;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 3px 9px;
-      border-radius: 100px;
-      margin-bottom: 5px;
+      padding: 4px 10px;
+      border-radius: 5px;
+      margin-bottom: 7px;
     }
 
     .pi {
-      background: rgba(216, 207, 188, .14);
-      border: 1px solid rgba(216, 207, 188, .3);
-      color: var(--bone);
+      background: rgba(255, 251, 245, .16);
+      border: 1px solid rgba(255, 251, 245, .3);
+      color: var(--ivory);
     }
 
     .pv {
-      background: rgba(86, 84, 73, .28);
-      border: 1px solid rgba(216, 207, 188, .22);
-      color: var(--bone);
-    }
-
-    /* PLAY ICON */
-    .pbtn {
-      position: absolute;
-      top: 13px;
-      right: 13px;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: rgba(255, 251, 244, .14);
-      border: 1px solid rgba(255, 251, 244, .28);
-      backdrop-filter: blur(8px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.25s, transform 0.25s;
-    }
-
-    .card:hover .pbtn {
-      background: rgba(255, 251, 244, .24);
-      transform: scale(1.1);
+      background: rgba(255, 251, 245, .16);
+      border: 1px solid rgba(255, 251, 245, .3);
+      color: var(--ivory);
     }
 
     /* SECTION TITLE */
     .stitle {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: clamp(30px, 4.5vw, 48px);
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-      color: var(--smoky);
+      font-family: 'Archivo', sans-serif;
+      font-weight: 900;
+      font-size: clamp(34px, 5.5vw, 60px);
+      letter-spacing: -0.045em;
+      line-height: 0.98;
+      color: var(--ink);
+      text-transform: uppercase;
     }
 
     /* LEGEND */
@@ -604,38 +583,164 @@
       align-items: center;
       gap: 6px;
       font-size: 11px;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--olive-lt);
+      color: var(--slate-lt);
     }
 
     .ld-i {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--olive);
+      width: 8px;
+      height: 8px;
+      background: var(--blue);
     }
 
     .ld-v {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--smoky);
+      width: 8px;
+      height: 8px;
+      background: var(--ink);
+    }
+
+    /* DUAL ROLE */
+    #roles {
+      padding: 110px 0;
+      background: var(--ivory-d);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .roles-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 44px;
+    }
+
+    @media(max-width:768px) {
+      .roles-grid { grid-template-columns: 1fr; }
+    }
+
+    .rcard {
+      background: var(--ivory);
+      border: 1px solid var(--border-d);
+      border-radius: 14px;
+      padding: 34px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+
+    .rcard:hover {
+      border-color: var(--blue);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(13, 71, 161, .10);
+    }
+
+    .rcard-num {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      color: var(--blue);
+    }
+
+    .rcard-t {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 900;
+      font-size: clamp(22px, 3vw, 30px);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--ink);
+      text-transform: uppercase;
+      margin: 14px 0 14px;
+    }
+
+    .rcard-d {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--slate);
+      line-height: 1.7;
+    }
+
+    .rcard-list {
+      list-style: none;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .rcard-list li {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--slate-lt);
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      line-height: 1.5;
+    }
+
+    .rcard-list li::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: var(--blue);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    .rcard-aster {
+      position: absolute;
+      top: 22px;
+      right: 22px;
+      width: 30px;
+      height: 30px;
+      opacity: 0.14;
+    }
+
+    .roles-bridge {
+      margin-top: 28px;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--slate);
+      line-height: 1.7;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .roles-bridge strong {
+      color: var(--blue);
+      font-weight: 600;
     }
 
     /* ABOUT */
     #about {
       padding: 120px 0;
-      background: var(--smoky);
-      color: var(--white);
+      background: var(--ink);
+      color: var(--ivory);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-aster {
+      position: absolute;
+      bottom: -40px;
+      right: -30px;
+      width: 240px;
+      height: 240px;
+      opacity: 0.10;
+      z-index: 0;
     }
 
     .ag {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1.1fr;
       gap: 80px;
       align-items: start;
+      position: relative;
+      z-index: 1;
     }
 
     @media(max-width:768px) {
@@ -646,32 +751,34 @@
     }
 
     .ah {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: clamp(30px, 5vw, 50px);
-      letter-spacing: -0.03em;
-      line-height: 1.06;
-      color: var(--white);
-      margin: 14px 0 22px;
+      font-family: 'Archivo', sans-serif;
+      font-weight: 900;
+      font-size: clamp(34px, 5.5vw, 58px);
+      letter-spacing: -0.045em;
+      line-height: 0.98;
+      color: var(--ivory);
+      margin: 16px 0 24px;
+      text-transform: uppercase;
     }
 
     .ah .ac {
-      color: var(--bone);
+      color: var(--blue-lt);
     }
 
     .ab {
       font-size: 15px;
       font-weight: 300;
-      color: var(--olive-xl);
+      color: rgba(255, 251, 245, .72);
       line-height: 1.78;
     }
 
     .pw {
       position: relative;
-      border-radius: 16px;
+      border-radius: 14px;
       overflow: hidden;
       aspect-ratio: 3/4;
-      background: var(--olive);
+      background: var(--slate);
+      border: 1px solid rgba(255, 251, 245, .1);
     }
 
     .pw img {
@@ -685,24 +792,23 @@
       position: absolute;
       bottom: 14px;
       left: 14px;
-      background: rgba(17, 18, 13, .72);
+      background: rgba(13, 71, 161, .92);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(216, 207, 188, .13);
-      border-radius: 10px;
-      padding: 10px 14px;
+      border-radius: 9px;
+      padding: 11px 15px;
     }
 
     .ptn {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Archivo', sans-serif;
       font-size: 13px;
-      font-weight: 700;
-      color: var(--white);
+      font-weight: 800;
+      color: var(--ivory);
     }
 
     .ptr {
       font-size: 11px;
-      color: var(--olive-xl);
-      margin-top: 1px;
+      color: rgba(255, 251, 245, .7);
+      margin-top: 2px;
     }
 
     .skills {
@@ -714,19 +820,20 @@
 
     .sk {
       font-size: 11px;
-      font-weight: 400;
-      color: var(--bone);
-      padding: 5px 12px;
-      border-radius: 100px;
-      border: 1px solid rgba(216, 207, 188, .17);
-      background: rgba(216, 207, 188, .06);
+      font-weight: 500;
+      color: rgba(255, 251, 245, .82);
+      padding: 6px 13px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 251, 245, .15);
+      background: rgba(255, 251, 245, .05);
       letter-spacing: 0.02em;
-      transition: background 0.2s, border-color 0.2s;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
     }
 
     .sk:hover {
-      background: rgba(216, 207, 188, .12);
-      border-color: rgba(216, 207, 188, .32);
+      background: var(--blue);
+      border-color: var(--blue);
+      color: var(--ivory);
     }
 
     .tl {
@@ -738,7 +845,7 @@
 
     .tl-i {
       display: flex;
-      gap: 13px;
+      gap: 14px;
     }
 
     .tl-dw {
@@ -749,50 +856,50 @@
     }
 
     .tl-d {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--bone);
+      width: 9px;
+      height: 9px;
+      background: var(--blue-lt);
       flex-shrink: 0;
     }
 
     .tl-ln {
-      width: 1px;
+      width: 1.5px;
       flex: 1;
-      background: rgba(216, 207, 188, .1);
+      background: rgba(255, 251, 245, .12);
       margin-top: 6px;
       min-height: 18px;
     }
 
     .tl-t {
-      font-family: 'Syne', sans-serif;
-      font-size: 13px;
+      font-family: 'Archivo', sans-serif;
+      font-size: 14px;
       font-weight: 700;
-      color: var(--white);
+      color: var(--ivory);
+      letter-spacing: -0.01em;
     }
 
     .tl-s {
       font-size: 11px;
-      color: var(--olive-xl);
-      margin-top: 1px;
+      color: rgba(255, 251, 245, .6);
+      margin-top: 2px;
     }
 
     .div-d {
       height: 1px;
-      background: rgba(86, 84, 73, .28);
+      background: rgba(255, 251, 245, .14);
       border: none;
-      margin: 26px 0;
+      margin: 28px 0;
     }
 
     /* FOOTER */
     footer {
-      background: var(--smoky);
-      border-top: 1px solid rgba(86, 84, 73, .28);
-      padding: 52px 0 36px;
+      background: var(--ink);
+      border-top: 1px solid rgba(255, 251, 245, .12);
+      padding: 54px 0 38px;
     }
 
     .fi {
-      max-width: 1120px;
+      max-width: 1160px;
       margin: 0 auto;
       padding: 0 28px;
     }
@@ -804,26 +911,29 @@
       align-items: flex-start;
       gap: 28px;
       padding-bottom: 28px;
-      border-bottom: 1px solid rgba(86, 84, 73, .22);
+      border-bottom: 1px solid rgba(255, 251, 245, .12);
     }
 
     .flo {
-      font-family: 'Syne', sans-serif;
-      font-size: 19px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--white);
+      font-family: 'Archivo', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: var(--ivory);
+      display: flex;
+      align-items: center;
+      gap: 3px;
     }
 
-    .flo em {
-      color: var(--olive);
-      font-style: normal;
+    .flo .ast-sm {
+      width: 15px;
+      height: 15px;
     }
 
     .ftag {
       font-size: 12px;
-      color: var(--olive-xl);
-      margin-top: 3px;
+      color: rgba(255, 251, 245, .55);
+      margin-top: 5px;
     }
 
     .slinks {
@@ -838,18 +948,18 @@
       gap: 6px;
       font-size: 12px;
       font-weight: 500;
-      color: var(--olive-xl);
+      color: rgba(255, 251, 245, .65);
       text-decoration: none;
-      padding: 8px 13px;
-      border-radius: 100px;
-      border: 1px solid rgba(86, 84, 73, .28);
+      padding: 9px 14px;
+      border-radius: 7px;
+      border: 1px solid rgba(255, 251, 245, .14);
       transition: color 0.2s, border-color 0.2s, background 0.2s;
     }
 
     .sl:hover {
-      color: var(--bone);
-      border-color: rgba(216, 207, 188, .28);
-      background: rgba(216, 207, 188, .04);
+      color: var(--ivory);
+      border-color: var(--blue);
+      background: var(--blue);
     }
 
     .fb {
@@ -863,7 +973,7 @@
 
     .fc {
       font-size: 11px;
-      color: rgba(86, 84, 73, .45);
+      color: rgba(255, 251, 245, .4);
       letter-spacing: 0.02em;
     }
 
@@ -871,7 +981,7 @@
     .cdot {
       width: 6px;
       height: 6px;
-      background: var(--smoky);
+      background: var(--blue);
       border-radius: 50%;
       position: fixed;
       pointer-events: none;
@@ -882,7 +992,7 @@
     .cring {
       width: 26px;
       height: 26px;
-      border: 1px solid rgba(86, 84, 73, .45);
+      border: 1px solid rgba(13, 71, 161, .5);
       border-radius: 50%;
       position: fixed;
       pointer-events: none;
@@ -892,11 +1002,7 @@
     }
 
     @media(pointer:coarse) {
-
-      .cdot,
-      .cring {
-        display: none
-      }
+      .cdot, .cring { display: none }
     }
   </style>
 </head>
@@ -906,12 +1012,22 @@
   <div class="cdot" id="cd"></div>
   <div class="cring" id="cr"></div>
 
+  <!-- SVG asterisk definition (6-point, como el CV) -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <symbol id="ast" viewBox="0 0 100 100">
+        <path fill="currentColor" d="M50 2c2 0 3.6 1.6 3.6 3.6l-1 28.2 19.6-20.3c1.4-1.5 3.8-1.5 5.2 0 1.4 1.4 1.4 3.7 0 5.1L56.9 38.4l28.2-1c2 0 3.6 1.6 3.6 3.6s-1.6 3.6-3.6 3.6l-28.2-1L77.4 64c1.4 1.4 1.4 3.7 0 5.1-1.4 1.5-3.8 1.5-5.2 0L52.6 48.9l1 28.2c0 2-1.6 3.6-3.6 3.6s-3.6-1.6-3.6-3.6l1-28.2L27.8 69.1c-1.4 1.5-3.8 1.5-5.2 0-1.4-1.4-1.4-3.7 0-5.1l20.5-19.6-28.2 1c-2 0-3.6-1.6-3.6-3.6s1.6-3.6 3.6-3.6l28.2 1L22.6 18.6c-1.4-1.4-1.4-3.7 0-5.1 1.4-1.5 3.8-1.5 5.2 0L47.4 33.8l-1-28.2C46.4 3.6 48 2 50 2z"/>
+      </symbol>
+    </defs>
+  </svg>
+
   <!-- NAV -->
   <nav>
     <div class="nav-in">
-      <a href="#hero" class="nav-logo">JDM<em>.</em></a>
+      <a href="#hero" class="nav-logo">JDM<svg class="aster ast-sm"><use href="#ast"/></svg></a>
       <div class="nav-links">
         <a href="#projects" class="nl">Proyectos</a>
+        <a href="#roles" class="nl">Roles</a>
         <a href="#about" class="nl">Sobre mí</a>
         <a href="https://juanmancip3.github.io/link-bio/" target="_blank" rel="noopener noreferrer" class="btn-dk" style="font-size:12px;padding:9px 18px;">Contactar</a>
       </div>
@@ -922,23 +1038,28 @@
   </nav>
   <div id="mob">
     <a href="#projects" class="mlink" onclick="cm()">Proyectos</a>
+    <a href="#roles" class="mlink" onclick="cm()">Roles</a>
     <a href="#about" class="mlink" onclick="cm()">Sobre mí</a>
     <a href="https://juanmancip3.github.io/link-bio/" target="_blank" rel="noopener noreferrer" class="mlink" onclick="cm()">Contactar →</a>
   </div>
 
   <!-- HERO -->
   <div id="hero" class="hero-wrap">
-    <p class="lbl a1" style="margin-bottom:18px;">UX/UI Designer &nbsp;·&nbsp; Creative Technologist &nbsp;·&nbsp; AI
-      &amp; Design</p>
+    <svg class="aster aster-spin hero-aster"><use href="#ast"/></svg>
+
+    <p class="lbl a1" style="margin-bottom:18px;">UX/UI Designer &nbsp;·&nbsp; Diseño + IA &nbsp;·&nbsp; Project Management</p>
 
     <h1 class="hero-h a2">
-      Juan Diego<br><span class="ol">Mancipe.</span>
+      Juan<br>Diego<br><span class="ol">Man<span class="script-c">C</span>ipe.</span>
     </h1>
 
+    <p class="hero-role a3">Diseñador UX/UI <span style="color:var(--slate-xl);font-weight:600;">&amp; Project Manager</span></p>
+
     <p class="a3"
-      style="font-size:clamp(14px,1.6vw,17px);font-weight:300;color:var(--olive);max-width:500px;line-height:1.75;margin-top:26px;">
-      Diseño experiencias digitales que conectan tecnología con personas.
-      Base en mecatrónica, IA generativa y gestión de proyectos.
+      style="font-size:clamp(14px,1.6vw,17px);font-weight:300;color:var(--slate);max-width:580px;line-height:1.75;margin-top:18px;">
+      Profesional integral que combina el diseño de experiencias digitales con la
+      gestión de proyectos. He desarrollado ambos roles y soy capaz de llevar una idea
+      desde el concepto hasta su ejecución — sumando IA generativa y un perfil técnico.
     </p>
 
     <div class="a4" style="display:flex;flex-wrap:wrap;gap:11px;margin-top:32px;">
@@ -964,22 +1085,22 @@
         <span class="mq-item">Figma<span class="mq-dot"></span></span>
         <span class="mq-item">Adobe XD<span class="mq-dot"></span></span>
         <span class="mq-item">UX Research<span class="mq-dot"></span></span>
-        <span class="mq-item">AI Generativa<span class="mq-dot"></span></span>
+        <span class="mq-item">Prototipado<span class="mq-dot"></span></span>
+        <span class="mq-item">IA Generativa<span class="mq-dot"></span></span>
         <span class="mq-item">FOOH Video<span class="mq-dot"></span></span>
-        <span class="mq-item">Photoshop<span class="mq-dot"></span></span>
         <span class="mq-item">Illustrator<span class="mq-dot"></span></span>
-        <span class="mq-item">Python<span class="mq-dot"></span></span>
-        <span class="mq-item">Arduino<span class="mq-dot"></span></span>
+        <span class="mq-item">Photoshop<span class="mq-dot"></span></span>
+        <span class="mq-item">Project Management<span class="mq-dot"></span></span>
         <span class="mq-item">Bogotá · Colombia<span class="mq-dot"></span></span>
         <span class="mq-item">Figma<span class="mq-dot"></span></span>
         <span class="mq-item">Adobe XD<span class="mq-dot"></span></span>
         <span class="mq-item">UX Research<span class="mq-dot"></span></span>
-        <span class="mq-item">AI Generativa<span class="mq-dot"></span></span>
+        <span class="mq-item">Prototipado<span class="mq-dot"></span></span>
+        <span class="mq-item">IA Generativa<span class="mq-dot"></span></span>
         <span class="mq-item">FOOH Video<span class="mq-dot"></span></span>
-        <span class="mq-item">Photoshop<span class="mq-dot"></span></span>
         <span class="mq-item">Illustrator<span class="mq-dot"></span></span>
-        <span class="mq-item">Python<span class="mq-dot"></span></span>
-        <span class="mq-item">Arduino<span class="mq-dot"></span></span>
+        <span class="mq-item">Photoshop<span class="mq-dot"></span></span>
+        <span class="mq-item">Project Management<span class="mq-dot"></span></span>
         <span class="mq-item">Bogotá · Colombia<span class="mq-dot"></span></span>
       </div>
     </div>
@@ -987,16 +1108,16 @@
     <!-- Stats -->
     <div class="stat-grid reveal d1">
       <div class="stat-c">
-        <div class="stat-n">4</div>
+        <div class="stat-n">UX/UI</div>
+        <div class="stat-l">Enfoque</div>
+      </div>
+      <div class="stat-c">
+        <div class="stat-n">4+</div>
         <div class="stat-l">Años exp.</div>
       </div>
       <div class="stat-c">
         <div class="stat-n">6+</div>
         <div class="stat-l">Proyectos</div>
-      </div>
-      <div class="stat-c">
-        <div class="stat-n">8</div>
-        <div class="stat-l">Tools UX/AI</div>
       </div>
       <div class="stat-c">
         <div class="stat-n">B1</div>
@@ -1006,24 +1127,20 @@
   </div>
 
   <!-- PROJECTS -->
-  <section id="projects" style="padding:120px 0;background:var(--white);">
+  <section id="projects" style="padding:64px 0 120px;background:var(--ivory);">
     <div class="sec-wrap">
       <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px;"
         class="reveal">
         <div>
-          <p class="lbl" style="margin-bottom:10px;">Portafolio</p>
-          <h2 class="stitle">Proyectos<br>seleccionados.</h2>
+          <p class="lbl" style="margin-bottom:12px;">Portafolio</p>
+          <h2 class="stitle">Proyectos<br>seleccionados</h2>
         </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
-          <p style="font-size:13px;color:var(--olive-lt);max-width:240px;text-align:right;line-height:1.65;">UX/UI,
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;">
+          <p style="font-size:13px;color:var(--slate-lt);max-width:240px;text-align:right;line-height:1.65;">UX/UI,
             contenido visual y producción con IA.</p>
           <div class="legend">
-            <div class="li">
-              <div class="ld-i"></div>Imagen
-            </div>
-            <div class="li">
-              <div class="ld-v"></div>Video
-            </div>
+            <div class="li"><div class="ld-i"></div>Imagen</div>
+            <div class="li"><div class="ld-v"></div>Video</div>
           </div>
         </div>
       </div>
@@ -1032,15 +1149,9 @@
 
         <!-- 1 -->
         <div class="card pa reveal" onclick="window.open('https://www.behance.net/gallery/248908489/Aplicacion-para-el-area-de-Bienestar-del-Areandina','_blank')" style="cursor:pointer;">
-          <img src="app bienestar.png"
-            alt="Rediseño App Bienestar" loading="lazy" />
+          <img src="app bienestar.png" alt="Rediseño App Bienestar" loading="lazy" />
           <div class="cfoot">
-            <div class="pill pi"><svg width="9" height="9" viewBox="0 0 9 9" fill="none">
-                <rect x=".4" y=".4" width="8.2" height="8.2" rx="1" stroke="currentColor" stroke-width="1" />
-                <circle cx="2.7" cy="2.7" r=".8" fill="currentColor" />
-                <path d="M.4 6.5l2.5-2.5 1.7 1.7 1.3-1.7L8.6 6.5" stroke="currentColor" stroke-width=".7"
-                  stroke-linecap="round" stroke-linejoin="round" />
-              </svg>Imagen</div>
+            <div class="pill pi">Imagen</div>
             <div class="ctitle">Rediseño App Bienestar</div>
           </div>
           <div class="cover">
@@ -1052,34 +1163,24 @@
         </div>
 
         <!-- 2 -->
- <div class="card pb reveal d1" onclick="window.open('https://www.behance.net/gallery/249746933/Propuesta-FOOH-para-H-M','_blank')" style="cursor:pointer;">
-          <img src="fooh hym.png"
-            alt="FOOH AI Comercial" loading="lazy" />
+        <div class="card pb reveal d1" onclick="window.open('https://www.behance.net/gallery/249746933/Propuesta-FOOH-para-H-M','_blank')" style="cursor:pointer;">
+          <img src="fooh hym.png" alt="FOOH AI Comercial" loading="lazy" />
           <div class="cfoot">
-            <div class="pill pv"><svg width="9" height="9" viewBox="0 0 9 9" fill="none">
-                <polygon points="1.5,1 8,4.5 1.5,8" fill="currentColor" />
-              </svg>Video</div>
+            <div class="pill pv">Video</div>
             <div class="ctitle">FOOH AI Comercial</div>
           </div>
           <div class="cover">
             <div class="pill pv">Video · AI Generated</div>
             <div class="ctitle">FOOH AI Comercial</div>
-            <div class="cdesc">Video fake out-of-home generado con IA para una campaña de espectativa para H&M.
-            </div>
+            <div class="cdesc">Video fake out-of-home generado con IA para una campaña de espectativa para H&M.</div>
           </div>
         </div>
 
         <!-- 3 -->
         <div class="card pc reveal d2" onclick="window.open('https://www.behance.net/juandiegomancipe','_blank')" style="cursor:pointer;">
-          <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&q=80" alt="Dashboard Analytics"
-            loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&q=80" alt="Dashboard Analytics" loading="lazy" />
           <div class="cfoot">
-            <div class="pill pi"><svg width="9" height="9" viewBox="0 0 9 9" fill="none">
-                <rect x=".4" y=".4" width="8.2" height="8.2" rx="1" stroke="currentColor" stroke-width="1" />
-                <circle cx="2.7" cy="2.7" r=".8" fill="currentColor" />
-                <path d="M.4 6.5l2.5-2.5 1.7 1.7 1.3-1.7L8.6 6.5" stroke="currentColor" stroke-width=".7"
-                  stroke-linecap="round" stroke-linejoin="round" />
-              </svg>Imagen</div>
+            <div class="pill pi">Imagen</div>
             <div class="ctitle">Dashboard Analytics</div>
           </div>
           <div class="cover">
@@ -1092,13 +1193,10 @@
         <!-- 4 -->
         <div class="card pd reveal d3" onclick="window.open('https://www.behance.net/gallery/249667801/Video-de-un-Producto','_blank')" style="cursor:pointer;">
           <div class="cbg" style="position:relative;overflow:hidden;">
-            <img src="siempre fresh.jpeg" alt="AI Product Video"
-              loading="lazy" style="width:100%;height:100%;object-fit:cover;" />
+            <img src="siempre fresh.jpeg" alt="AI Product Video" loading="lazy" style="width:100%;height:100%;object-fit:cover;" />
           </div>
           <div class="cfoot">
-            <div class="pill pv"><svg width="9" height="9" viewBox="0 0 9 9" fill="none">
-                <polygon points="1.5,1 8,4.5 1.5,8" fill="currentColor" />
-              </svg>Video</div>
+            <div class="pill pv">Video</div>
             <div class="ctitle">AI Product Video Identity</div>
           </div>
           <div class="cover">
@@ -1110,35 +1208,25 @@
 
         <!-- 5 -->
         <div class="card pe reveal d4" onclick="window.open('https://www.behance.net/juandiegomancipe','_blank')" style="cursor:pointer;">
-          <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80" alt="App Onboarding"
-            loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80" alt="App Onboarding" loading="lazy" />
           <div class="cfoot">
-            <div class="pill pi"><svg width="9" height="9" viewBox="0 0 9 9" fill="none">
-                <rect x=".4" y=".4" width="8.2" height="8.2" rx="1" stroke="currentColor" stroke-width="1" />
-                <circle cx="2.7" cy="2.7" r=".8" fill="currentColor" />
-                <path d="M.4 6.5l2.5-2.5 1.7 1.7 1.3-1.7L8.6 6.5" stroke="currentColor" stroke-width=".7"
-                  stroke-linecap="round" stroke-linejoin="round" />
-              </svg>Imagen</div>
+            <div class="pill pi">Imagen</div>
             <div class="ctitle">App Onboarding Flow</div>
           </div>
           <div class="cover">
             <div class="pill pi">Imagen · Mobile UX</div>
             <div class="ctitle">App Onboarding Flow</div>
-            <div class="cdesc">Flujo de incorporación de usuarios para app educativa STEM con diseño instruccional.
-            </div>
+            <div class="cdesc">Flujo de incorporación de usuarios para app educativa STEM con diseño instruccional.</div>
           </div>
         </div>
 
         <!-- 6 -->
         <div class="card pf reveal d5" onclick="window.open('https://www.behance.net/gallery/249676479/Landing-Page-para-Adaptia','_blank')" style="cursor:pointer;">
           <div class="cbg" style="position:relative;overflow:hidden;">
-            <img src="landing adaptia.png"
-              alt="Landing Page para una Marca" loading="lazy" style="width:100%;height:100%;object-fit:cover;" />
+            <img src="landing adaptia.png" alt="Landing Page para una Marca" loading="lazy" style="width:100%;height:100%;object-fit:cover;" />
           </div>
           <div class="cfoot">
-            <div class="pill pv"><svg width="9" height="9" viewBox="0 0 9 9" fill="none">
-                <polygon points="1.5,1 8,4.5 1.5,8" fill="currentColor" />
-              </svg>Web Design</div>
+            <div class="pill pv">Web Design</div>
             <div class="ctitle">Landing Page de Adaptia</div>
           </div>
           <div class="cover">
@@ -1150,7 +1238,7 @@
 
       </div>
 
-      <div style="margin-top:36px;display:flex;justify-content:center;" class="reveal">
+      <div style="margin-top:38px;display:flex;justify-content:center;" class="reveal">
         <a href="https://www.behance.net/juandiegomancipe" target="_blank" rel="noopener noreferrer" class="btn-gh">
           Ver portafolio completo en Behance
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -1162,45 +1250,97 @@
     </div>
   </section>
 
+  <!-- DUAL ROLE -->
+  <section id="roles">
+    <div class="sec-wrap">
+      <div class="reveal" style="text-align:center;">
+        <p class="lbl" style="margin-bottom:12px;">Cómo trabajo</p>
+        <h2 class="stitle">Diseño<br>de punta a punta</h2>
+        <p class="roles-bridge">
+          Combino dos perfiles que se potencian entre sí: el ojo del diseñador y la
+          disciplina del gestor. Por eso mis entregas no se quedan en el Figma —
+          <strong>las llevo hasta producción</strong>.
+        </p>
+      </div>
+
+      <div class="roles-grid">
+        <div class="rcard reveal d1">
+          <svg class="aster rcard-aster"><use href="#ast"/></svg>
+          <div class="rcard-num">EL DISEÑO</div>
+          <h3 class="rcard-t">Diseñador<br>UX/UI</h3>
+          <p class="rcard-d">
+            Diseño experiencias digitales centradas en las personas:
+            investigación, flujos, wireframes y prototipos de alta fidelidad
+            que se sienten claros y humanos.
+          </p>
+          <ul class="rcard-list">
+            <li>UX Research, arquitectura de información y flujos de usuario</li>
+            <li>Wireframes y prototipos hi-fi en Figma y Adobe XD</li>
+            <li>Diseño de interfaces, sistemas visuales y accesibilidad</li>
+            <li>Contenido visual y video con IA generativa (FOOH)</li>
+          </ul>
+        </div>
+
+        <div class="rcard reveal d2">
+          <svg class="aster rcard-aster"><use href="#ast"/></svg>
+          <div class="rcard-num">LA EJECUCIÓN</div>
+          <h3 class="rcard-t">Project<br>Manager</h3>
+          <p class="rcard-d">
+            Y cuando hay que volver realidad lo diseñado, sé orquestarlo:
+            planifico, coordino equipos y aseguro que todo se entregue a
+            tiempo y con calidad.
+          </p>
+          <ul class="rcard-list">
+            <li>Gestión de proyectos simultáneos de concepto a publicación</li>
+            <li>Coordinación de equipos de diseño, negocio y tecnología</li>
+            <li>Briefing creativo y comunicación con clientes y stakeholders</li>
+            <li>Planificación y control de tiempos, alcance y calidad</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ABOUT -->
   <section id="about">
+    <svg class="aster about-aster"><use href="#ast"/></svg>
     <div class="sec-wrap">
       <div class="ag">
 
         <!-- Photo -->
         <div class="reveal">
           <div class="pw">
-            <img src="foto de perfil.jpeg" alt="Juan Diego Mancipe"
-              loading="lazy" />
+            <img src="foto de perfil.jpeg" alt="Juan Diego Mancipe" loading="lazy" />
             <div class="ptag">
               <div class="ptn">Juan Diego Mancipe</div>
-              <div class="ptr">UX/UI Designer · Bogotá</div>
+              <div class="ptr">Diseñador UX/UI · Bogotá</div>
             </div>
           </div>
           <div class="skills">
             <span class="sk">Figma</span><span class="sk">Adobe XD</span>
             <span class="sk">Illustrator</span><span class="sk">Photoshop</span>
-            <span class="sk">Python</span><span class="sk">HTML/CSS</span>
-            <span class="sk">Arduino</span><span class="sk">AI Generativa</span>
-            <span class="sk">FOOH</span><span class="sk">AWS</span>
-            <span class="sk">Monday</span><span class="sk">ESP32</span>
+            <span class="sk">Premiere</span><span class="sk">UX Research</span>
+            <span class="sk">Prototipado</span><span class="sk">IA Generativa</span>
+            <span class="sk">FOOH</span><span class="sk">Monday</span>
+            <span class="sk">Jira</span><span class="sk">Miro</span>
           </div>
         </div>
 
         <!-- Text -->
         <div class="reveal d2">
-          <p class="lbl" style="color:var(--olive-xl);">Sobre mí</p>
-          <h2 class="ah">Tecnología<br>que se siente<br><span class="ac">humana.</span></h2>
+          <p class="lbl">Sobre mí</p>
+          <h2 class="ah">Diseño<br>que se siente<br><span class="ac">humano.</span></h2>
           <p class="ab">
-            Soy diseñador UX/UI con una base inusual: mecatrónica, electrónica industrial
-            y más de cuatro años en roles técnicos y administrativos. Esa combinación me
-            da una perspectiva distinta — entiendo los sistemas por dentro y los usuarios
-            por fuera.
+            Soy un profesional integral que ha desarrollado dos roles complementarios:
+            diseño UX/UI y gestión de proyectos. A eso sumo una base poco común —
+            mecatrónica y automatización industrial — que me da una perspectiva distinta:
+            entiendo los sistemas por dentro y a los usuarios por fuera.
           </p>
           <p class="ab" style="margin-top:14px;">
-            Actualmente cursando UX/UI Design, y con un certificado por Google en fundamentos de
-            experiencia de usuario. Además produzco contenido visual con IA generativa,
-            incluyendo videos FOOH.
+            Diseño experiencias digitales y produzco contenido visual con IA generativa,
+            incluyendo videos FOOH. Y como también he gestionado proyectos, sé llevar
+            las ideas hasta producción: coordinando equipos, tiempos y calidad sin
+            perder de vista al usuario.
           </p>
 
           <hr class="div-d" />
@@ -1218,7 +1358,7 @@
             </div>
             <div class="tl-i">
               <div class="tl-dw">
-                <div class="tl-d" style="opacity:.6"></div>
+                <div class="tl-d" style="opacity:.7"></div>
                 <div class="tl-ln"></div>
               </div>
               <div>
@@ -1228,18 +1368,27 @@
             </div>
             <div class="tl-i">
               <div class="tl-dw">
+                <div class="tl-d" style="opacity:.5"></div>
+                <div class="tl-ln"></div>
+              </div>
+              <div>
+                <div class="tl-t">Coord. de Contenidos Digitales &amp; Innovación</div>
+                <div class="tl-s">Fundación del Areandina · 2024</div>
+              </div>
+            </div>
+            <div class="tl-i">
+              <div class="tl-dw">
                 <div class="tl-d" style="opacity:.35"></div>
               </div>
               <div>
-                <div class="tl-t">Technical Planning Analyst</div>
-                <div class="tl-s">Lat one Group · 2022 - 2023</div>
+                <div class="tl-t">Technical Planning Analyst &amp; Marketing</div>
+                <div class="tl-s">Lat One Group · 2022 – 2023</div>
               </div>
             </div>
           </div>
 
           <div style="margin-top:34px;">
-            <a href="https://juanmancip3.github.io/link-bio/" target="_blank" rel="noopener noreferrer" class="btn-dk"
-              style="background:var(--bone);color:var(--smoky);">
+            <a href="https://juanmancip3.github.io/link-bio/" target="_blank" rel="noopener noreferrer" class="btn-dk">
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
                 <rect x=".5" y="2.5" width="12" height="8" rx="1.3" stroke="currentColor" stroke-width="1.2" />
                 <path d="M.5 3.5l6 5 6-5" stroke="currentColor" stroke-width="1.2" />
@@ -1258,7 +1407,7 @@
     <div class="fi">
       <div class="ft">
         <div>
-          <div class="flo">JDM<em>.</em></div>
+          <div class="flo">JDM<svg class="aster ast-sm"><use href="#ast"/></svg></div>
           <div class="ftag">Bogotá, Colombia · Disponible para freelance</div>
         </div>
         <div class="slinks">
@@ -1329,8 +1478,8 @@
     document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cdEl.style.left = mx + 'px'; cdEl.style.top = my + 'px'; });
     (function t() { rx += (mx - rx) * .13; ry += (my - ry) * .13; crEl.style.left = rx + 'px'; crEl.style.top = ry + 'px'; requestAnimationFrame(t); })();
     document.querySelectorAll('a,button,.card').forEach(el => {
-      el.addEventListener('mouseenter', () => { crEl.style.width = '42px'; crEl.style.height = '42px'; crEl.style.borderColor = 'rgba(86,84,73,.65)'; });
-      el.addEventListener('mouseleave', () => { crEl.style.width = '26px'; crEl.style.height = '26px'; crEl.style.borderColor = 'rgba(86,84,73,.45)'; });
+      el.addEventListener('mouseenter', () => { crEl.style.width = '42px'; crEl.style.height = '42px'; crEl.style.borderColor = 'rgba(13,71,161,.8)'; });
+      el.addEventListener('mouseleave', () => { crEl.style.width = '26px'; crEl.style.height = '26px'; crEl.style.borderColor = 'rgba(13,71,161,.5)'; });
     });
   </script>
 </body>
