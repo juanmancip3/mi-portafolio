@@ -1310,6 +1310,54 @@
     .exp-aster { position: absolute; top: 20px; right: 20px; width: 28px; height: 28px; opacity: 0.12; }
     .exp-item.current .exp-aster { color: var(--ivory); opacity: 0.22; }
 
+    /* ===== LANG TOGGLE ===== */
+    .lang-btn {
+      font-family: 'Archivo', sans-serif;
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: none;
+      border: 1.5px solid var(--border-d);
+      color: var(--ink);
+      border-radius: 8px;
+      padding: 7px 12px;
+      cursor: pointer;
+      transition: border-color 0.3s, color 0.3s, background 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .lang-btn:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+      background: var(--blue-soft);
+    }
+    .lang-btn .lang-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+    }
+    /* mobile lang in menu */
+    .mob-lang {
+      display: flex;
+      justify-content: center;
+      padding: 18px 0 8px;
+    }
+    .mob-lang .lang-btn {
+      border-color: rgba(255,251,245,.25);
+      color: var(--ivory);
+    }
+    .mob-lang .lang-btn:hover {
+      border-color: var(--blue-lt);
+      color: var(--ivory);
+      background: rgba(13,71,161,.2);
+    }
+    .mob-lang .lang-btn .lang-dot { background: var(--blue-lt); }
+
     /* ===== REDUCED MOTION ===== */
     @media (prefers-reduced-motion: reduce) {
       * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
@@ -1342,7 +1390,8 @@
         <a href="#projects" class="nl">Trabajos</a>
         <a href="#experiencia" class="nl">Experiencia</a>
         <a href="#about" class="nl">Sobre mí</a>
-        <a href="https://juanmancip3.github.io/link-bio/" target="_blank" rel="noopener noreferrer" class="btn-dk" style="font-size:12px;padding:9px 18px;">Contactar</a>
+        <button class="lang-btn" id="langToggle" onclick="toggleLang()"><span class="lang-dot"></span><span id="langLabel">EN</span></button>
+        <a href="https://juanmancip3.github.io/link-bio/" target="_blank" rel="noopener noreferrer" class="btn-dk" style="font-size:12px;padding:9px 18px;" data-t="nav-contact">Contactar</a>
       </div>
       <button class="hbtn" id="hb" aria-label="Menú">
         <span id="s1"></span><span id="s2"></span><span id="s3"></span>
@@ -1355,7 +1404,8 @@
     <a href="#projects" class="mlink" onclick="cm()">Trabajos</a>
     <a href="#experiencia" class="mlink" onclick="cm()">Experiencia</a>
     <a href="#about" class="mlink" onclick="cm()">Sobre mí</a>
-    <a href="https://juanmancip3.github.io/link-bio/" target="_blank" rel="noopener noreferrer" class="mlink" onclick="cm()">Contactar →</a>
+    <a href="https://juanmancip3.github.io/link-bio/" target="_blank" rel="noopener noreferrer" class="mlink" onclick="cm()" data-t="mob-contact">Contactar →</a>
+    <div class="mob-lang"><button class="lang-btn" onclick="toggleLang()"><span class="lang-dot"></span><span class="lang-label-sync">EN</span></button></div>
   </div>
 
   <!-- HERO -->
@@ -1904,15 +1954,16 @@
       el.addEventListener('mouseleave', () => { crEl.style.width = '26px'; crEl.style.height = '26px'; crEl.style.borderColor = 'rgba(13,71,161,.5)'; });
     });
 
-    // Rotating word (hero)
+    // Rotating word (hero) — uses window._rotWords for i18n
+    window._rotWords = ['contenido', 'marcas', 'experiencias', 'comunidades', 'campañas', 'video'];
     (function () {
       const el = document.getElementById('rotw');
       if (!el) return;
-      const words = ['contenido', 'marcas', 'experiencias', 'comunidades', 'campañas', 'video'];
       let i = 0;
-      setInterval(() => {
+      window._rotInterval = setInterval(() => {
         el.classList.add('out');
         setTimeout(() => {
+          const words = window._rotWords;
           i = (i + 1) % words.length;
           el.textContent = words[i];
           el.classList.remove('out');
@@ -1954,6 +2005,297 @@
       window.addEventListener('scroll', upd, { passive: true });
       window.addEventListener('resize', upd);
       upd();
+    })();
+
+    // ===== i18n TRANSLATION SYSTEM =====
+    (function () {
+      let currentLang = 'es';
+
+      // Map: CSS selector → { es, en }
+      // For repeated selectors we use arrays (matched in DOM order)
+      const T = {
+        // —— NAV ——
+        '.nav-links .nl': [
+          { es: 'Lo que hago', en: 'What I do' },
+          { es: 'Cargos', en: 'Roles' },
+          { es: 'Trabajos', en: 'Work' },
+          { es: 'Experiencia', en: 'Experience' },
+          { es: 'Sobre mí', en: 'About me' }
+        ],
+        '[data-t="nav-contact"]': { es: 'Contactar', en: 'Contact' },
+        // —— MOBILE NAV ——
+        '#mob .mlink:not([data-t])': [
+          { es: 'Lo que hago', en: 'What I do' },
+          { es: 'Cargos', en: 'Roles' },
+          { es: 'Trabajos', en: 'Work' },
+          { es: 'Experiencia', en: 'Experience' },
+          { es: 'Sobre mí', en: 'About me' }
+        ],
+        '[data-t="mob-contact"]': { es: 'Contactar →', en: 'Contact →' },
+        // —— HERO ——
+        '.hero-wrap > .lbl': { es: 'Profesional creativo integral · Bogotá, Colombia', en: 'Integral creative professional · Bogotá, Colombia' },
+        '.hero-role': { es: null, en: null }, // handled by rot-line
+      };
+
+      // All text nodes to translate (selector → [{ es, en }] or single { es, en })
+      // We'll use a flat list approach instead for precision
+
+      const translations = [
+        // NAV desktop
+        { s: '.nav-links .nl', i: 0, es: 'Lo que hago', en: 'What I do' },
+        { s: '.nav-links .nl', i: 1, es: 'Cargos', en: 'Roles' },
+        { s: '.nav-links .nl', i: 2, es: 'Trabajos', en: 'Work' },
+        { s: '.nav-links .nl', i: 3, es: 'Experiencia', en: 'Experience' },
+        { s: '.nav-links .nl', i: 4, es: 'Sobre mí', en: 'About me' },
+        { s: '[data-t="nav-contact"]', i: 0, es: 'Contactar', en: 'Contact' },
+        // NAV mobile
+        { s: '#mob .mlink', i: 0, es: 'Lo que hago', en: 'What I do' },
+        { s: '#mob .mlink', i: 1, es: 'Cargos', en: 'Roles' },
+        { s: '#mob .mlink', i: 2, es: 'Trabajos', en: 'Work' },
+        { s: '#mob .mlink', i: 3, es: 'Experiencia', en: 'Experience' },
+        { s: '#mob .mlink', i: 4, es: 'Sobre mí', en: 'About me' },
+        { s: '[data-t="mob-contact"]', i: 0, es: 'Contactar →', en: 'Contact →' },
+        // HERO
+        { s: '.hero-wrap > .lbl', i: 0, es: 'Profesional creativo integral · Bogotá, Colombia', en: 'Integral creative professional · Bogotá, Colombia' },
+        // rotating line — just the static "Creo" part
+        { s: '.rot-line > span:first-child', i: 0, es: 'Creo', en: 'I create' },
+        // hero paragraph
+        { s: '.hero-wrap > p[style*="max-width:610"]', i: 0, es: 'Soy un profesional creativo integral y competente: llevo cualquier idea del concepto a la entrega. Produzco contenido y video, gestiono redes y comunidades, construyo marcas y diseño experiencias digitales \u2014 y uso IA para hacerlo más rápido, más ambicioso y con criterio.', en: 'I\u2019m a well-rounded, hands-on creative professional: I take any idea from concept to delivery. I produce content and video, manage social media and communities, build brands and design digital experiences \u2014 and I use AI to do it faster, bolder, and with intention.' },
+        // hero buttons
+        { s: '#hero .btn-dk', i: 0, es: 'Ver de qué soy capaz', en: 'See what I can do', html: true },
+        { s: '#hero .btn-gh', i: 0, es: 'Behance', en: 'Behance' },
+        { s: '#hero .btn-gh', i: 1, es: 'Contactar', en: 'Contact', html: true },
+        // stats
+        { s: '.stat-l', i: 0, es: 'Años de experiencia', en: 'Years of experience' },
+        { s: '.stat-l', i: 1, es: 'Videos producidos', en: 'Videos produced' },
+        { s: '.stat-l', i: 2, es: 'Áreas que domino', en: 'Areas I master' },
+        { s: '.stat-l', i: 3, es: 'Herramientas de IA', en: 'AI tools' },
+        // MARQUEE — we swap the whole track
+        // (handled separately below)
+
+        // CAPACIDADES section
+        { s: '#capacidades .lbl', i: 0, es: 'Lo que hago', en: 'What I do' },
+        { s: '#capacidades .stitle', i: 0, es: 'Esto es lo\nque domino', en: 'This is what\nI master', html: true },
+        { s: '#capacidades .services-head .intro', i: 0, es: 'Cubro todo el proceso creativo \u2014 del concepto a la entrega \u2014 en seis frentes que se potencian entre sí. La IA es mi multiplicador en cada uno.', en: 'I cover the full creative process \u2014 from concept to delivery \u2014 across six fronts that reinforce each other. AI is my multiplier in every one.' },
+        // Cards headers
+        { s: '.rcard-num', i: 0, es: 'AUDIOVISUAL', en: 'AUDIOVISUAL' },
+        { s: '.rcard-num', i: 1, es: 'SOCIAL', en: 'SOCIAL' },
+        { s: '.rcard-num', i: 2, es: 'MARCA', en: 'BRAND' },
+        { s: '.rcard-num', i: 3, es: 'DIGITAL', en: 'DIGITAL' },
+        { s: '.rcard-num', i: 4, es: 'IA', en: 'AI' },
+        { s: '.rcard-num', i: 5, es: 'GESTIÓN', en: 'MANAGEMENT' },
+        // card titles
+        { s: '.sgrid .rcard-t', i: 0, esH: 'Video &amp;<br>contenido', enH: 'Video &amp;<br>content' },
+        { s: '.sgrid .rcard-t', i: 1, esH: 'Redes &amp;<br>community', enH: 'Social media<br>&amp; community' },
+        { s: '.sgrid .rcard-t', i: 2, esH: 'Branding &amp;<br>identidad', enH: 'Branding &amp;<br>identity' },
+        { s: '.sgrid .rcard-t', i: 3, esH: 'Diseño &amp;<br>UX/UI', enH: 'Design &amp;<br>UX/UI' },
+        { s: '.sgrid .rcard-t', i: 4, esH: 'IA aplicada<br>a la creación', enH: 'AI applied<br>to creation' },
+        { s: '.sgrid .rcard-t', i: 5, esH: 'Gestión &amp;<br>entrega', enH: 'Management<br>&amp; delivery' },
+        // card descriptions
+        { s: '.sgrid .rcard-d', i: 0, es: 'Produzco video de principio a fin: concepto, guion, rodaje o generación con IA, edición y post.', en: 'I produce video end-to-end: concept, script, shooting or AI generation, editing and post.' },
+        { s: '.sgrid .rcard-d', i: 1, es: 'Manejo la presencia digital de una marca: estrategia, calendario, copy y comunidad.', en: 'I manage a brand\u2019s digital presence: strategy, content calendar, copywriting and community.' },
+        { s: '.sgrid .rcard-d', i: 2, es: 'Construyo identidades coherentes: del concepto al sistema visual listo para aplicar.', en: 'I build coherent identities: from concept to a ready-to-apply visual system.' },
+        { s: '.sgrid .rcard-d', i: 3, es: 'Diseño piezas e interfaces digitales claras, atractivas y centradas en las personas.', en: 'I design clear, attractive, people-centered digital assets and interfaces.' },
+        { s: '.sgrid .rcard-d', i: 4, es: 'Uso IA generativa para producir más y mejor, sin perder criterio ni dirección.', en: 'I use generative AI to produce more and better, without losing judgment or direction.' },
+        { s: '.sgrid .rcard-d', i: 5, es: 'No solo creo: entrego. Coordino tiempos, equipos y clientes para que todo llegue a producción.', en: 'I don\u2019t just create: I deliver. I coordinate timelines, teams and clients so everything ships.' },
+        // card list items (6 cards × 4 items = 24)
+        { s: '.sgrid .rcard-list li', i: 0, es: 'UGC y video vertical para redes', en: 'UGC & vertical video for social' },
+        { s: '.sgrid .rcard-list li', i: 1, es: 'FOOH, motion y efectos', en: 'FOOH, motion & effects' },
+        { s: '.sgrid .rcard-list li', i: 2, es: 'Edición y color en Premiere', en: 'Editing & color in Premiere' },
+        { s: '.sgrid .rcard-list li', i: 3, es: 'Video con IA: Runway, Veo, Flow, HeyGen', en: 'AI video: Runway, Veo, Flow, HeyGen' },
+        { s: '.sgrid .rcard-list li', i: 4, es: 'Gestión de redes y parrillas de contenido', en: 'Social media & content calendar management' },
+        { s: '.sgrid .rcard-list li', i: 5, es: 'Copywriting y conceptos de campaña', en: 'Copywriting & campaign concepts' },
+        { s: '.sgrid .rcard-list li', i: 6, es: 'Community management y respuesta', en: 'Community management & engagement' },
+        { s: '.sgrid .rcard-list li', i: 7, es: 'Lectura de métricas y crecimiento', en: 'Analytics & growth tracking' },
+        { s: '.sgrid .rcard-list li', i: 8, es: 'Identidad visual, logo y paleta', en: 'Visual identity, logo & palette' },
+        { s: '.sgrid .rcard-list li', i: 9, es: 'Sistemas de marca y dirección de arte', en: 'Brand systems & art direction' },
+        { s: '.sgrid .rcard-list li', i: 10, es: 'Guías y aplicaciones gráficas', en: 'Brand guidelines & graphic assets' },
+        { s: '.sgrid .rcard-list li', i: 11, es: 'Naming y concepto de marca', en: 'Naming & brand concept' },
+        { s: '.sgrid .rcard-list li', i: 12, es: 'Landing pages y sitios web', en: 'Landing pages & websites' },
+        { s: '.sgrid .rcard-list li', i: 13, es: 'UX research y prototipos (Figma, XD)', en: 'UX research & prototypes (Figma, XD)' },
+        { s: '.sgrid .rcard-list li', i: 14, es: 'Sistemas de diseño e interfaces', en: 'Design systems & interfaces' },
+        { s: '.sgrid .rcard-list li', i: 15, es: 'Diseño gráfico y editorial', en: 'Graphic & editorial design' },
+        { s: '.sgrid .rcard-list li', i: 16, es: 'Imagen: Midjourney, Ideogram, DALL·E', en: 'Image: Midjourney, Ideogram, DALL·E' },
+        { s: '.sgrid .rcard-list li', i: 17, es: 'Video: Runway, Veo, Seedance, Higgsfield', en: 'Video: Runway, Veo, Seedance, Higgsfield' },
+        { s: '.sgrid .rcard-list li', i: 18, es: 'Prompt engineering aplicado', en: 'Applied prompt engineering' },
+        { s: '.sgrid .rcard-list li', i: 19, es: 'Fotografía de producto con IA', en: 'AI product photography' },
+        { s: '.sgrid .rcard-list li', i: 20, es: 'Gestión de proyectos simultáneos', en: 'Simultaneous project management' },
+        { s: '.sgrid .rcard-list li', i: 21, es: 'Coordinación de equipos y stakeholders', en: 'Team & stakeholder coordination' },
+        { s: '.sgrid .rcard-list li', i: 22, es: 'Briefing, alcance y control de tiempos', en: 'Briefing, scope & timeline control' },
+        { s: '.sgrid .rcard-list li', i: 23, es: 'Experiencia real como Project Analyst', en: 'Real experience as Project Analyst' },
+
+        // CARGOS section
+        { s: '#cargos .lbl', i: 0, es: 'Dónde encajo', en: 'Where I fit' },
+        { s: '#cargos .stitle', i: 0, esH: 'Cargos que puedo<br>desempeñar', enH: 'Roles I can<br>take on' },
+        { s: '#cargos .sub', i: 0, es: 'Un perfil integral se traduce en varios roles. Estos son los cargos que puedo asumir hoy \u2014 con el criterio y las herramientas para hacerlo bien desde el primer día.', en: 'A well-rounded profile translates into multiple roles. These are the positions I can take on today \u2014 with the judgment and tools to perform from day one.' },
+        // role names
+        { s: '.role-name', i: 0, es: 'Creador de Contenido', en: 'Content Creator' },
+        { s: '.role-name', i: 1, es: 'Community / Social Media Manager', en: 'Community / Social Media Manager' },
+        { s: '.role-name', i: 2, esH: 'Diseñador Gráfico &amp; UX/UI', enH: 'Graphic &amp; UX/UI Designer' },
+        { s: '.role-name', i: 3, esH: 'Creativo &amp; Productor con IA', enH: 'Creative &amp; AI Producer' },
+        { s: '.role-name', i: 4, es: 'Diseñador de Marca', en: 'Brand Designer' },
+        { s: '.role-name', i: 5, es: 'Coordinador de Proyectos', en: 'Project Coordinator' },
+        // role tags
+        { s: '.role-tags', i: 0, es: 'Video · UGC · Copy · Redes', en: 'Video · UGC · Copy · Social' },
+        { s: '.role-tags', i: 1, es: 'Estrategia · Parrilla · Comunidad · Métricas', en: 'Strategy · Calendar · Community · Analytics' },
+        { s: '.role-tags', i: 2, es: 'Figma · Web · Interfaces · Editorial', en: 'Figma · Web · Interfaces · Editorial' },
+        { s: '.role-tags', i: 3, es: 'Midjourney · Runway · Veo · Prompting', en: 'Midjourney · Runway · Veo · Prompting' },
+        { s: '.role-tags', i: 4, es: 'Identidad · Sistemas · Dirección de arte', en: 'Identity · Systems · Art direction' },
+        { s: '.role-tags', i: 5, es: 'Planeación · Equipos · Tiempos · Entrega', en: 'Planning · Teams · Timelines · Delivery' },
+
+        // PROJECTS section
+        { s: '#projects .lbl', i: 0, es: 'La prueba', en: 'The proof' },
+        { s: '#projects .stitle', i: 0, esH: 'Trabajos<br>seleccionados', enH: 'Selected<br>work' },
+        { s: '#projects .reveal > p[style*="text-align:right"]', i: 0, es: 'Lo que digo, lo respaldo. Contenido, video, branding y diseño \u2014 buena parte producido o potenciado con IA.', en: 'I back up what I say. Content, video, branding and design \u2014 much of it produced or enhanced with AI.' },
+        // project cards
+        { s: '.ctitle', i: 0, es: 'Rediseño App Bienestar', en: 'Wellness App Redesign' },
+        { s: '.ctitle', i: 1, esH: 'FOOH AI · H&amp;M', enH: 'FOOH AI · H&amp;M' },
+        { s: '.ctitle', i: 2, es: 'Video UGC con IA', en: 'AI-powered UGC Video' },
+        { s: '.ctitle', i: 3, es: 'AI Product Video', en: 'AI Product Video' },
+        { s: '.ctitle', i: 4, es: 'App Onboarding Flow', en: 'App Onboarding Flow' },
+        { s: '.ctitle', i: 5, es: 'Landing de Adaptia', en: 'Adaptia Landing Page' },
+        { s: '.ctitle', i: 6, es: 'Rediseño App Bienestar', en: 'Wellness App Redesign' },
+        { s: '.ctitle', i: 7, esH: 'FOOH AI · H&amp;M', enH: 'FOOH AI · H&amp;M' },
+        { s: '.ctitle', i: 8, es: 'Video UGC con IA', en: 'AI-powered UGC Video' },
+        { s: '.ctitle', i: 9, es: 'AI Product Video', en: 'AI Product Video' },
+        { s: '.ctitle', i: 10, es: 'App Onboarding Flow', en: 'App Onboarding Flow' },
+        { s: '.ctitle', i: 11, es: 'Landing de Adaptia', en: 'Adaptia Landing Page' },
+        // project descriptions (hover)
+        { s: '.cdesc', i: 0, es: 'Wireframes, flujos de usuario y prototipo hi-fi en Figma. Enfoque en accesibilidad y retención.', en: 'Wireframes, user flows and hi-fi prototype in Figma. Focus on accessibility and retention.' },
+        { s: '.cdesc', i: 1, esH: 'Video fake out-of-home generado con IA para una campaña de expectativa de H&amp;M.', enH: 'AI-generated fake out-of-home video for an H&amp;M teaser campaign.' },
+        { s: '.cdesc', i: 2, es: 'Video creado con IA desde cero para contenido UGC de una marca de skincare.', en: 'Video created with AI from scratch for a skincare brand\u2019s UGC content.' },
+        { s: '.cdesc', i: 3, es: 'Animación de producto con IA para una startup. Affinity, Premiere, ElevenLabs y Flow.', en: 'AI product animation for a startup. Affinity, Premiere, ElevenLabs & Flow.' },
+        { s: '.cdesc', i: 4, es: 'Flujo de incorporación de usuarios para una app educativa STEM con diseño instruccional.', en: 'User onboarding flow for a STEM education app with instructional design.' },
+        { s: '.cdesc', i: 5, es: 'Diseño y desarrollo de la landing para Adaptia, mi consultoría de IA aplicada.', en: 'Design and development of the landing page for Adaptia, my applied AI consultancy.' },
+        // Behance btn
+        { s: '#projects .btn-gh', i: 0, es: 'Ver portafolio completo en Behance', en: 'View full portfolio on Behance', html: true },
+
+        // EXPERIENCIA
+        { s: '#experiencia .lbl', i: 0, es: 'Trayectoria', en: 'Background' },
+        { s: '#experiencia .stitle', i: 0, esH: 'Experiencia<br>que respalda', enH: 'Experience<br>that backs it up' },
+        { s: '#experiencia > .sec-wrap > .reveal > p[style*="max-width"]', i: 0, es: 'Mi recorrido mezcla creación de contenido y marketing con la gestión de proyectos. Esa combinación es la que hace que lo que propongo se ejecute y se entregue.', en: 'My path blends content creation and marketing with project management. That combination is what makes sure what I propose actually gets executed and delivered.' },
+        // exp items
+        { s: '.exp-when', i: 0, es: '2026 · Presente', en: '2026 · Present' },
+        { s: '.exp-when', i: 1, es: '2025 · 2026', en: '2025 · 2026' },
+        { s: '.exp-when', i: 2, es: '2024', en: '2024' },
+        { s: '.exp-when', i: 3, es: '2022 · 2023', en: '2022 · 2023' },
+        { s: '.exp-role', i: 0, es: 'Coordinador de Logística', en: 'Logistics Coordinator' },
+        { s: '.exp-role', i: 1, es: 'Project Development Success Analyst', en: 'Project Development Success Analyst' },
+        { s: '.exp-role', i: 2, esH: 'Coord. de Contenidos Digitales &amp; Innovación', enH: 'Digital Content &amp; Innovation Coordinator' },
+        { s: '.exp-role', i: 3, esH: 'Planeación &amp; Marketing', enH: 'Planning &amp; Marketing' },
+        { s: '.exp-desc', i: 0, es: 'Coordinación operativa y logística de las iniciativas de la fundación: planeación, recursos y ejecución.', en: 'Operational and logistics coordination of the foundation\u2019s initiatives: planning, resources and execution.' },
+        { s: '.exp-desc', i: 1, es: 'Gestión de 6\u201314 proyectos simultáneos de telecomunicaciones y ciberseguridad, coordinando tiempos, alcance y stakeholders.', en: 'Managing 6\u201314 simultaneous telecom and cybersecurity projects, coordinating timelines, scope and stakeholders.' },
+        { s: '.exp-desc', i: 2, es: 'Producción de contenido digital y liderazgo de proyectos de innovación educativa.', en: 'Digital content production and leadership of educational innovation projects.' },
+        { s: '.exp-desc', i: 3, es: 'Proyectos de marketing B2B y producción de más de 100 videos de formación frente a cámara.', en: 'B2B marketing projects and production of 100+ on-camera training videos.' },
+
+        // ABOUT
+        { s: '.ptn', i: 0, es: 'Juan Diego Mancipe', en: 'Juan Diego Mancipe' },
+        { s: '.ptr', i: 0, es: 'Profesional creativo integral · Bogotá', en: 'Integral creative professional · Bogotá' },
+        { s: '#about .lbl', i: 0, es: 'Sobre mí', en: 'About me' },
+        { s: '.ah', i: 0, esH: 'Integral<br>por naturaleza,<br><span class="ac">competente</span> por oficio.', enH: 'Integral<br>by nature,<br><span class="ac">competent</span> by craft.' },
+        { s: '.ab', i: 0, es: 'Soy un creativo digital versátil: creo contenido y video, gestiono redes, construyo marcas y diseño experiencias. La IA generativa es parte de mi forma de trabajar \u2014 me deja producir más rápido y con más ambición sin perder el criterio.', en: 'I\u2019m a versatile digital creative: I produce content and video, manage social media, build brands and design experiences. Generative AI is part of how I work \u2014 it lets me produce faster and more ambitiously without losing judgment.' },
+        { s: '.ab', i: 1, es: 'A eso sumo una base poco común \u2014 mecatrónica y automatización industrial \u2014 y experiencia real gestionando proyectos. Por eso no me quedo en la idea: sé coordinar equipos, tiempos y clientes para que el trabajo llegue a producción. Un perfil difícil de encasillar, y esa es justo la ventaja.', en: 'On top of that, I bring an uncommon background \u2014 mechatronics and industrial automation \u2014 plus real project management experience. That\u2019s why I don\u2019t stop at the idea: I know how to coordinate teams, timelines and clients so the work actually ships. A hard profile to pigeonhole, and that\u2019s exactly the advantage.' },
+        { s: '.ab', i: 2, es: 'Bogotá, Colombia · Adaptia (consultoría de IA) · Estudios en Ingeniería Mecatrónica · Tecnólogo en Automatización Industrial · Certificaciones Adobe, Google y Microsoft.', en: 'Bogotá, Colombia · Adaptia (AI consultancy) · Mechatronics Engineering studies · Industrial Automation Technologist · Adobe, Google & Microsoft certifications.' },
+        // about CTA
+        { s: '#about .btn-dk', i: 0, es: 'Hablemos', en: 'Let\u2019s talk', html: true },
+
+        // FOOTER
+        { s: '.ftag', i: 0, es: 'Bogotá, Colombia · Disponible para proyectos y roles creativos', en: 'Bogotá, Colombia · Available for creative projects and roles' },
+        { s: '.fc', i: 0, es: '© 2026 Juan Diego Mancipe Matallana · Profesional creativo integral', en: '© 2026 Juan Diego Mancipe Matallana · Integral creative professional' },
+        { s: '.fc', i: 1, es: 'Diseñado y desarrollado con criterio propio ✳', en: 'Designed and developed with my own judgment ✳' },
+      ];
+
+      // Marquee ES/EN
+      const mqES = [
+        'Creación de contenido', 'Video & Motion', 'Redes sociales', 'Community',
+        'Branding', 'Diseño UX/UI', 'Copywriting', 'IA Generativa',
+        'Gestión de proyectos', 'Bogotá · Colombia'
+      ];
+      const mqEN = [
+        'Content creation', 'Video & Motion', 'Social media', 'Community',
+        'Branding', 'UX/UI Design', 'Copywriting', 'Generative AI',
+        'Project management', 'Bogotá · Colombia'
+      ];
+
+      // Rotating words ES/EN
+      const rotWordsES = ['contenido', 'marcas', 'experiencias', 'comunidades', 'campañas', 'video'];
+      const rotWordsEN = ['content', 'brands', 'experiences', 'communities', 'campaigns', 'video'];
+      window._rotWords = rotWordsES; // expose for the rotating interval
+
+      // Skills tags
+      const skES = ['Contenido','Video','Redes sociales','Copywriting','Branding','Figma','Illustrator','Photoshop','Premiere','Midjourney','Runway','Veo','HeyGen','UX Research','Project Management'];
+      const skEN = ['Content','Video','Social media','Copywriting','Branding','Figma','Illustrator','Photoshop','Premiere','Midjourney','Runway','Veo','HeyGen','UX Research','Project Management'];
+
+      // Pill tags
+      const pillES = ['Diseño · UX/UI','Video · IA','Video · UGC','Video · Motion','Diseño · UX/UI','Web · Branding','Diseño · UX/UI','Video · IA Generativa','Contenido · UGC con IA','Video · Motion · IA','Diseño · Mobile UX','Web · Branding · UX/UI'];
+      const pillEN = ['Design · UX/UI','Video · AI','Video · UGC','Video · Motion','Design · UX/UI','Web · Branding','Design · UX/UI','Video · Generative AI','Content · AI UGC','Video · Motion · AI','Design · Mobile UX','Web · Branding · UX/UI'];
+
+      function applyLang(lang) {
+        // Text translations
+        translations.forEach(t => {
+          const els = document.querySelectorAll(t.s);
+          const el = els[t.i];
+          if (!el) return;
+          if (t.esH !== undefined) {
+            el.innerHTML = lang === 'es' ? t.esH : t.enH;
+          } else if (t.html) {
+            // preserve SVG icons — only replace the last text node
+            const svgs = el.querySelectorAll('svg');
+            const text = lang === 'es' ? t.es : t.en;
+            if (svgs.length) {
+              // find text nodes
+              const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+              let last = null;
+              while (walker.nextNode()) last = walker.currentNode;
+              if (last) last.textContent = '\n        ' + text + '\n      ';
+            } else {
+              el.textContent = text;
+            }
+          } else {
+            el.textContent = lang === 'es' ? t.es : t.en;
+          }
+        });
+
+        // Marquee
+        const mqItems = document.querySelectorAll('.mq-item');
+        const mqSrc = lang === 'es' ? mqES : mqEN;
+        mqItems.forEach((el, idx) => {
+          const si = idx % mqSrc.length;
+          // preserve the dot span
+          const dot = el.querySelector('.mq-dot');
+          el.textContent = mqSrc[si];
+          if (dot) el.appendChild(dot);
+        });
+
+        // Skills
+        const sks = document.querySelectorAll('.sk');
+        const skSrc = lang === 'es' ? skES : skEN;
+        sks.forEach((el, idx) => { if (skSrc[idx]) el.textContent = skSrc[idx]; });
+
+        // Pills
+        const pills = document.querySelectorAll('.pill');
+        const pSrc = lang === 'es' ? pillES : pillEN;
+        pills.forEach((el, idx) => { if (pSrc[idx]) el.textContent = pSrc[idx]; });
+
+        // Rotating word
+        window._rotWords = lang === 'es' ? rotWordsES : rotWordsEN;
+        const rw = document.getElementById('rotw');
+        if (rw) rw.textContent = (lang === 'es' ? rotWordsES : rotWordsEN)[0];
+
+        // Page title
+        document.title = lang === 'es'
+          ? 'Juan Diego Mancipe · Profesional Creativo Integral'
+          : 'Juan Diego Mancipe · Integral Creative Professional';
+        document.documentElement.lang = lang;
+      }
+
+      window.toggleLang = function () {
+        currentLang = currentLang === 'es' ? 'en' : 'es';
+        const newLabel = currentLang === 'es' ? 'EN' : 'ES';
+        document.getElementById('langLabel').textContent = newLabel;
+        document.querySelectorAll('.lang-label-sync').forEach(el => el.textContent = newLabel);
+        applyLang(currentLang);
+      };
     })();
   </script>
 </body>
