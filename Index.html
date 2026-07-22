@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: #838DA4; font-family: 'Space Grotesk', system-ui, sans-serif; color: #14161c; -webkit-font-smoothing: antialiased; }
+  a { color: #14161c; text-decoration: none; }
+  a:hover { color: #ffffff; }
+  ::selection { background: #14161c; color: #838DA4; }
+  @keyframes orbit1 { from{ transform:rotateY(0deg) translateZ(250px) rotateY(0deg) translate(-50%,-50%) } to{ transform:rotateY(360deg) translateZ(250px) rotateY(-360deg) translate(-50%,-50%) } }
+  @keyframes orbit2 { from{ transform:rotateY(0deg) translateZ(330px) rotateY(0deg) translate(-50%,-50%) } to{ transform:rotateY(360deg) translateZ(330px) rotateY(-360deg) translate(-50%,-50%) } }
+  @keyframes orbit3 { from{ transform:rotateY(0deg) translateZ(200px) rotateY(0deg) translate(-50%,-50%) } to{ transform:rotateY(360deg) translateZ(200px) rotateY(-360deg) translate(-50%,-50%) } }
+  @keyframes orbit4 { from{ transform:rotateY(0deg) translateZ(300px) rotateY(0deg) translate(-50%,-50%) } to{ transform:rotateY(360deg) translateZ(300px) rotateY(-360deg) translate(-50%,-50%) } }
+  @keyframes orbit5 { from{ transform:rotateY(0deg) translateZ(360px) rotateY(0deg) translate(-50%,-50%) } to{ transform:rotateY(360deg) translateZ(360px) rotateY(-360deg) translate(-50%,-50%) } }
+  .tile-inner { transition: filter .5s; }
+  .tile-inner:hover { filter: brightness(1.08); }
+  .orbit:hover .tile-label { opacity: 1 !important; }
+  .tile-inner video:not([src]) { opacity: 0; }
+</style>
+</helmet>
+
+<div style="min-height:100vh; background:#838DA4; padding:0 clamp(20px,5vw,64px);">
+
+  <header style="display:flex; align-items:center; justify-content:space-between; padding:28px 0; position:sticky; top:0; background:#838DA4; z-index:20;">
+    <a href="#" onClick="{{ goHome }}" style="font-size:15px; letter-spacing:0.02em; font-weight:500;">juan diego mancipe<span style="opacity:0.55;">.</span></a>
+    <nav style="display:flex; align-items:center; gap:clamp(14px,2.4vw,32px); font-size:14px;">
+      <a href="#" onClick="{{ goHome }}" style="opacity:0.75;">{{ t.work }}</a>
+      <a href="#" onClick="{{ toggleAbout }}" style="opacity:0.75;">{{ t.about }}</a>
+      <a href="https://www.behance.net/juandiegomancipe" target="_blank" style="opacity:0.75;">behance</a>
+      <button onClick="{{ toggleLang }}" style="font-family:inherit; font-size:13px; letter-spacing:0.08em; background:none; border:1px solid rgba(20,22,28,0.35); color:#14161c; border-radius:999px; padding:5px 13px; cursor:pointer;">{{ t.langBtn }}</button>
+    </nav>
+  </header>
+
+  <!-- HOME -->
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <main style="padding:0;">
+    <div id="orbit-stage" style="position:relative; width:100%; height:clamp(640px,88vh,1000px); perspective:1600px; perspective-origin:50% 50%; cursor:grab; touch-action:none; user-select:none;">
+      <div id="orbit-ring" style="position:absolute; inset:0; transform-style:preserve-3d; transform:translateY(-7%) rotateX(-12deg); transition:transform .4s cubic-bezier(.2,.7,.2,1);">
+
+        <div class="orbit" onClick="{{ open1 }}" style="position:absolute; left:50%; top:50%; width:0; height:0; cursor:pointer; transform-style:preserve-3d; transform:rotateY(0deg) translateZ(290px);" data-r="290" data-phase="0">
+          <div class="orbit-face" style="position:absolute; left:0; top:0; width:clamp(250px,24vw,380px); height:clamp(330px,32vw,480px); transform-style:preserve-3d; transform:translate(-50%,-50%) rotateY(0deg);">
+            <div class="tile-inner" style="width:100%; height:100%; position:relative; overflow:hidden; box-shadow:0 30px 70px rgba(20,22,28,0.32);">
+              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; background:rgba(20,22,28,0.12); color:rgba(20,22,28,0.55); font-size:13px; letter-spacing:0.05em; padding:14px;">Tu imagen o video · 01</div>
+              <video id="media-branding" autoplay muted loop playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;"></video>
+            </div>
+            <div class="tile-label" style="position:absolute; top:calc(100% + 12px); left:0; right:0; text-align:center; color:#14161c; pointer-events:none; opacity:0; transition:opacity .35s;">
+              <span style="font-size:clamp(14px,1.5vw,17px); font-weight:500;">{{ c1.name }}</span>
+              <span style="display:block; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; opacity:0.6; margin-top:2px;">{{ c1.no }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="orbit" onClick="{{ open2 }}" style="position:absolute; left:50%; top:50%; width:0; height:0; cursor:pointer; transform-style:preserve-3d; transform:rotateY(72deg) translateZ(380px);" data-r="380" data-phase="72">
+          <div class="orbit-face" style="position:absolute; left:0; top:0; width:clamp(240px,23vw,340px); height:clamp(175px,16vw,240px); transform-style:preserve-3d; transform:translate(-50%,-50%) rotateY(-72deg);">
+            <div class="tile-inner" style="width:100%; height:100%; position:relative; overflow:hidden; box-shadow:0 30px 70px rgba(20,22,28,0.32);">
+              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; background:rgba(20,22,28,0.12); color:rgba(20,22,28,0.55); font-size:13px; letter-spacing:0.05em; padding:14px;">Tu imagen o video · 02</div>
+              <video id="media-web" autoplay muted loop playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;"></video>
+            </div>
+            <div class="tile-label" style="position:absolute; top:calc(100% + 12px); left:0; right:0; text-align:center; color:#14161c; pointer-events:none; opacity:0; transition:opacity .35s;">
+              <span style="font-size:clamp(14px,1.5vw,17px); font-weight:500;">{{ c2.name }}</span>
+              <span style="display:block; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; opacity:0.6; margin-top:2px;">{{ c2.no }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="orbit" onClick="{{ open3 }}" style="position:absolute; left:50%; top:50%; width:0; height:0; cursor:pointer; transform-style:preserve-3d; transform:rotateY(144deg) translateZ(250px);" data-r="250" data-phase="144">
+          <div class="orbit-face" style="position:absolute; left:0; top:0; width:clamp(310px,31vw,460px); height:clamp(205px,21vw,305px); transform-style:preserve-3d; transform:translate(-50%,-50%) rotateY(-144deg);">
+            <div class="tile-inner" style="width:100%; height:100%; position:relative; overflow:hidden; box-shadow:0 30px 70px rgba(20,22,28,0.32);">
+              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; background:rgba(20,22,28,0.12); color:rgba(20,22,28,0.55); font-size:13px; letter-spacing:0.05em; padding:14px;">Tu imagen o video · 03</div>
+              <video id="media-video" autoplay muted loop playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;"></video>
+            </div>
+            <div class="tile-label" style="position:absolute; top:calc(100% + 12px); left:0; right:0; text-align:center; color:#14161c; pointer-events:none; opacity:0; transition:opacity .35s;">
+              <span style="font-size:clamp(14px,1.5vw,17px); font-weight:500;">{{ c3.name }}</span>
+              <span style="display:block; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; opacity:0.6; margin-top:2px;">{{ c3.no }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="orbit" onClick="{{ open4 }}" style="position:absolute; left:50%; top:50%; width:0; height:0; cursor:pointer; transform-style:preserve-3d; transform:rotateY(216deg) translateZ(350px);" data-r="350" data-phase="216">
+          <div class="orbit-face" style="position:absolute; left:0; top:0; width:clamp(270px,27vw,390px); height:clamp(185px,18vw,265px); transform-style:preserve-3d; transform:translate(-50%,-50%) rotateY(-216deg);">
+            <div class="tile-inner" style="width:100%; height:100%; position:relative; overflow:hidden; box-shadow:0 30px 70px rgba(20,22,28,0.32);">
+              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; background:rgba(20,22,28,0.12); color:rgba(20,22,28,0.55); font-size:13px; letter-spacing:0.05em; padding:14px;">Tu imagen o video · 04</div>
+              <video id="media-ia" autoplay muted loop playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;"></video>
+            </div>
+            <div class="tile-label" style="position:absolute; top:calc(100% + 12px); left:0; right:0; text-align:center; color:#14161c; pointer-events:none; opacity:0; transition:opacity .35s;">
+              <span style="font-size:clamp(14px,1.5vw,17px); font-weight:500;">{{ c4.name }}</span>
+              <span style="display:block; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; opacity:0.6; margin-top:2px;">{{ c4.no }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="orbit" onClick="{{ open5 }}" style="position:absolute; left:50%; top:50%; width:0; height:0; cursor:pointer; transform-style:preserve-3d; transform:rotateY(288deg) translateZ(420px);" data-r="420" data-phase="288">
+          <div class="orbit-face" style="position:absolute; left:0; top:0; width:clamp(215px,20vw,300px); height:clamp(265px,26vw,385px); transform-style:preserve-3d; transform:translate(-50%,-50%) rotateY(-288deg);">
+            <div class="tile-inner" style="width:100%; height:100%; position:relative; overflow:hidden; box-shadow:0 30px 70px rgba(20,22,28,0.32);">
+              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; background:rgba(20,22,28,0.12); color:rgba(20,22,28,0.55); font-size:13px; letter-spacing:0.05em; padding:14px;">Tu imagen o video · 05</div>
+              <video id="media-social" autoplay muted loop playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;"></video>
+            </div>
+            <div class="tile-label" style="position:absolute; top:calc(100% + 12px); left:0; right:0; text-align:center; color:#14161c; pointer-events:none; opacity:0; transition:opacity .35s;">
+              <span style="font-size:clamp(14px,1.5vw,17px); font-weight:500;">{{ c5.name }}</span>
+              <span style="display:block; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; opacity:0.6; margin-top:2px;">{{ c5.no }}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+  </sc-if>
+
+  <!-- PROJECT -->
+  <sc-if value="{{ isProject }}" hint-placeholder-val="{{ false }}">
+  <main style="padding:clamp(20px,4vw,48px) 0 90px;">
+    <a href="#" onClick="{{ goHome }}" style="display:inline-flex; align-items:center; gap:8px; font-size:14px; opacity:0.8; margin-bottom:clamp(28px,5vw,56px);">← {{ t.back }}</a>
+    <div style="display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:18px; border-bottom:1px solid rgba(20,22,28,0.28); padding-bottom:26px; margin-bottom:clamp(28px,5vw,52px);">
+      <div>
+        <span style="font-size:12px; letter-spacing:0.14em; text-transform:uppercase; opacity:0.7;">{{ active.no }}</span>
+        <h1 style="font-size:clamp(34px,6vw,72px); font-weight:500; line-height:1; margin:10px 0 0; text-wrap:balance;">{{ active.name }}</h1>
+      </div>
+      <p style="max-width:420px; font-size:16px; line-height:1.45; opacity:0.85; margin:0; text-wrap:pretty;">{{ active.desc }}</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(12px,1.6vw,22px);">
+      <sc-for list="{{ active.gallery }}" as="g" hint-placeholder-count="6">
+        <div style="position:relative; width:100%; aspect-ratio:16/10; overflow:hidden; background:rgba(20,22,28,0.08);">
+          <image-slot id="{{ g.id }}" shape="rect" placeholder="{{ g.ph }}"></image-slot>
+          <a href="https://www.behance.net/juandiegomancipe" target="_blank" style="position:absolute; top:16px; right:16px; display:inline-flex; align-items:center; gap:6px; font-size:13px; letter-spacing:0.04em; background:rgba(255,255,255,0.92); color:#14161c; padding:8px 14px; border-radius:999px; z-index:5;">{{ t.viewBehance }} ↗</a>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="text-align:center; margin-top:clamp(40px,7vw,80px);">
+      <a href="https://www.behance.net/juandiegomancipe" target="_blank" style="display:inline-block; font-size:16px; border:1px solid rgba(20,22,28,0.4); border-radius:999px; padding:14px 30px;">{{ t.fullBehance }} ↗</a>
+    </div>
+  </main>
+  </sc-if>
+
+  <!-- ABOUT / CONTACT overlay -->
+  <sc-if value="{{ aboutOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ toggleAbout }}" style="position:fixed; inset:0; background:rgba(20,22,28,0.55); z-index:40; display:flex; justify-content:flex-end;">
+    <aside onClick="{{ stop }}" style="width:min(520px,100%); height:100%; background:#838DA4; padding:clamp(28px,5vw,56px); overflow-y:auto; box-shadow:-30px 0 80px rgba(20,22,28,0.3);">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
+        <span style="font-size:13px; letter-spacing:0.14em; text-transform:uppercase; opacity:0.7;">{{ t.about }}</span>
+        <button onClick="{{ toggleAbout }}" style="font-family:inherit; font-size:20px; background:none; border:none; color:#14161c; cursor:pointer;">✕</button>
+      </div>
+      <p style="font-size:clamp(20px,2.6vw,28px); line-height:1.35; margin:0 0 28px; font-weight:400; text-wrap:pretty;">{{ t.aboutLead }}</p>
+      <p style="font-size:16px; line-height:1.55; opacity:0.85; margin:0 0 44px; text-wrap:pretty;">{{ t.aboutBody }}</p>
+      <div style="display:flex; flex-direction:column; gap:2px; border-top:1px solid rgba(20,22,28,0.28); padding-top:26px;">
+        <a href="https://www.behance.net/juandiegomancipe" target="_blank" style="display:flex; justify-content:space-between; padding:14px 0; border-bottom:1px solid rgba(20,22,28,0.18); font-size:16px;"><span style="opacity:0.6;">Behance</span><span>@juandiegomancipe ↗</span></a>
+        <a href="https://www.linkedin.com/in/juan-diego-mancipe-matallana/" target="_blank" style="display:flex; justify-content:space-between; padding:14px 0; border-bottom:1px solid rgba(20,22,28,0.18); font-size:16px;"><span style="opacity:0.6;">LinkedIn</span><span>juan diego mancipe ↗</span></a>
+        <a href="mailto:juanmancipe0022@gmail.com" style="display:flex; justify-content:space-between; padding:14px 0; border-bottom:1px solid rgba(20,22,28,0.18); font-size:16px;"><span style="opacity:0.6;">Email</span><span>juanmancipe0022@gmail.com</span></a>
+        <a href="tel:+573128133821" style="display:flex; justify-content:space-between; padding:14px 0; font-size:16px;"><span style="opacity:0.6;">{{ t.phone }}</span><span>+57 312 813 3821</span></a>
+      </div>
+    </aside>
+  </div>
+  </sc-if>
+
+  <footer style="border-top:1px solid rgba(20,22,28,0.28); padding:28px 0 40px; display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; font-size:13px; opacity:0.75;">
+    <span>© 2026 Juan Diego Mancipe · Bogotá, Colombia</span>
+    <span>{{ t.available }}</span>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { view: 'home', active: 0, lang: 'es', aboutOpen: false };
+
+  data() {
+    const cats = [
+      {
+        no: '01',
+        name: { es: 'Branding & Identidad', en: 'Branding & Identity' },
+        desc: {
+          es: 'Identidades coherentes: del concepto al sistema visual listo para aplicar — logo, paleta, dirección de arte y guías.',
+          en: 'Coherent identities: from concept to a ready-to-apply visual system — logo, palette, art direction and guidelines.'
+        },
+        key: 'branding'
+      },
+      {
+        no: '02',
+        name: { es: 'Diseño Web & UX/UI', en: 'Web & UX/UI Design' },
+        desc: {
+          es: 'Interfaces y sitios claros y centrados en las personas: landing pages, research, prototipos y sistemas de diseño en Figma.',
+          en: 'Clear, people-centered interfaces and sites: landing pages, research, prototypes and design systems in Figma.'
+        },
+        key: 'web'
+      },
+      {
+        no: '03',
+        name: { es: 'Edición de Video & Motion', en: 'Video & Motion' },
+        desc: {
+          es: 'Video de principio a fin: concepto, guion, rodaje o generación con IA, edición, color y motion para redes y marcas.',
+          en: 'Video end to end: concept, script, shooting or AI generation, editing, color and motion for social and brands.'
+        },
+        key: 'video'
+      },
+      {
+        no: '04',
+        name: { es: 'IA Generativa', en: 'Generative AI' },
+        desc: {
+          es: 'IA aplicada a la creación con criterio: imagen, video y producto con Midjourney, Runway, Veo, Flow y prompt engineering.',
+          en: 'Generative AI applied with judgment: image, video and product with Midjourney, Runway, Veo, Flow and prompt engineering.'
+        },
+        key: 'ia'
+      },
+      {
+        no: '05',
+        name: { es: 'Contenido & Redes', en: 'Content & Social' },
+        desc: {
+          es: 'Presencia digital de marca: estrategia, parrillas, copy, community management y lectura de métricas para crecer.',
+          en: 'Brand digital presence: strategy, content calendars, copy, community management and metrics to grow.'
+        },
+        key: 'social'
+      }
+    ];
+    return cats;
+  }
+
+  strings() {
+    const s = {
+      es: {
+        work: 'trabajos', about: 'sobre mí', langBtn: 'EN', back: 'volver',
+        viewBehance: 'Ver en Behance', fullBehance: 'Ver portafolio completo en Behance',
+        available: 'Disponible para proyectos y roles creativos', phone: 'Teléfono',
+        intro: 'Profesional creativo integral. Llevo cualquier idea del concepto a la entrega — branding, diseño, video e IA. Elige un área para ver el trabajo.',
+        aboutLead: 'Integral por naturaleza, competente por oficio.',
+        aboutBody: 'Creativo digital versátil: creo contenido y video, gestiono redes, construyo marcas y diseño experiencias, con la IA generativa como parte de mi forma de trabajar. Sumo una base en mecatrónica y experiencia real gestionando proyectos, así que no me quedo en la idea: la llevo a producción.'
+      },
+      en: {
+        work: 'work', about: 'about', langBtn: 'ES', back: 'back',
+        viewBehance: 'View on Behance', fullBehance: 'See full portfolio on Behance',
+        available: 'Available for projects and creative roles', phone: 'Phone',
+        intro: 'A full-stack creative professional. I take any idea from concept to delivery — branding, design, video and AI. Pick an area to see the work.',
+        aboutLead: 'Versatile by nature, competent by craft.',
+        aboutBody: 'A versatile digital creative: I make content and video, manage social, build brands and design experiences, with generative AI as part of how I work. I add a background in mechatronics and real project-management experience — so I don\u2019t stop at the idea, I bring it to production.'
+      }
+    };
+    return s;
+  }
+
+  open(i) { this.setState({ view: 'project', active: i }); window.scrollTo(0, 0); }
+
+  _angle = 0;
+  _dragOffset = 0;
+  componentDidMount() {
+    this._last = performance.now();
+    const tick = (now) => {
+      const dt = Math.min((now - this._last) / 1000, 0.05);
+      this._last = now;
+      this._angle += dt * 11;
+      const total = this._angle + this._dragOffset;
+      const tiles = document.querySelectorAll('.orbit');
+      for (const el of tiles) {
+        const R = parseFloat(el.dataset.r) || 250;
+        const ph = parseFloat(el.dataset.phase) || 0;
+        const a = total + ph;
+        el.style.transform = 'rotateY(' + a + 'deg) translateZ(' + R + 'px)';
+        const face = el.querySelector('.orbit-face');
+        if (face) face.style.transform = 'translate(-50%,-50%) rotateY(' + (-a) + 'deg)';
+      }
+      this._raf = requestAnimationFrame(tick);
+    };
+    this._raf = requestAnimationFrame(tick);
+
+    this._down = (e) => {
+      const stage = document.getElementById('orbit-stage');
+      if (!stage || !stage.contains(e.target)) return;
+      this._dragging = true;
+      this._moved = false;
+      this._lastX = e.clientX;
+      document.body.style.cursor = 'grabbing';
+    };
+    this._move = (e) => {
+      if (!this._dragging) return;
+      const dx = e.clientX - this._lastX;
+      this._lastX = e.clientX;
+      if (Math.abs(dx) > 1) this._moved = true;
+      this._dragOffset += dx * 0.3;
+    };
+    this._up = () => {
+      if (!this._dragging) return;
+      this._dragging = false;
+      document.body.style.cursor = '';
+      setTimeout(() => { this._moved = false; }, 0);
+    };
+    window.addEventListener('pointerdown', this._down);
+    window.addEventListener('pointermove', this._move);
+    window.addEventListener('pointerup', this._up);
+  }
+  componentWillUnmount() {
+    if (this._raf) cancelAnimationFrame(this._raf);
+    window.removeEventListener('pointerdown', this._down);
+    window.removeEventListener('pointermove', this._move);
+    window.removeEventListener('pointerup', this._up);
+  }
+  tryOpen(i) { if (this._moved) return; this.open(i); }
+  renderVals() {
+    const lang = this.state.lang;
+    const t = this.strings()[lang];
+    const cats = this.data();
+    const loc = cats.map((c, i) => ({
+      no: c.no,
+      name: c.name[lang],
+      desc: c.desc[lang],
+      gallery: [1, 2, 3, 4, 5, 6].map(n => ({
+        id: 'gal-' + c.key + '-' + n,
+        ph: c.name[lang] + ' — ' + n
+      }))
+    }));
+    return {
+      t,
+      isHome: this.state.view === 'home',
+      isProject: this.state.view === 'project',
+      aboutOpen: this.state.aboutOpen,
+      active: loc[this.state.active],
+      c1: loc[0], c2: loc[1], c3: loc[2], c4: loc[3], c5: loc[4],
+      open1: () => this.tryOpen(0),
+      open2: () => this.tryOpen(1),
+      open3: () => this.tryOpen(2),
+      open4: () => this.tryOpen(3),
+      open5: () => this.tryOpen(4),
+      goHome: (e) => { if (e) e.preventDefault(); this.setState({ view: 'home', aboutOpen: false }); window.scrollTo(0, 0); },
+      toggleLang: () => this.setState(s => ({ lang: s.lang === 'es' ? 'en' : 'es' })),
+      toggleAbout: (e) => { if (e) e.preventDefault(); this.setState(s => ({ aboutOpen: !s.aboutOpen })); },
+      stop: (e) => e.stopPropagation()
+    };
+  }
+}
+</script>
+</body>
+</html>
