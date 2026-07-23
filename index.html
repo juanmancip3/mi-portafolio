@@ -31,6 +31,11 @@
   img:is(:not([src]), [src=""]) { display: none !important; }
   video:not([src]) { display: none !important; }
   video[src] + span, img[src] ~ span { display: none !important; }
+  @media (max-width: 640px) {
+    header { flex-direction: column; gap: 10px; text-align: center; }
+    header nav { flex-wrap: wrap; justify-content: center; }
+    #orbit-ring { transform: translateY(-4%) rotateX(-12deg) scale(0.62) !important; }
+  }
 </style>
 </helmet>
 
@@ -49,7 +54,7 @@
   <!-- HOME -->
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
   <main style="padding:0;">
-    <div id="orbit-stage" style="position:relative; width:100%; height:clamp(640px,88vh,1000px); perspective:1600px; perspective-origin:50% 50%; cursor:grab; touch-action:none; user-select:none;">
+    <div id="orbit-stage" style="position:relative; width:100%; height:clamp(640px,88vh,1000px); perspective:1600px; perspective-origin:50% 50%; cursor:grab; touch-action:pan-y; user-select:none;">
       <div id="orbit-ring" style="position:absolute; inset:0; transform-style:preserve-3d; transform:translateY(-7%) rotateX(-12deg); transition:transform .4s cubic-bezier(.2,.7,.2,1);">
 
         <div class="orbit" onClick="{{ open1 }}" style="position:absolute; left:50%; top:50%; width:0; height:0; cursor:pointer; transform-style:preserve-3d; transform:rotateY(0deg) translateZ(290px);" data-r="290" data-phase="0">
@@ -314,11 +319,21 @@ class Component extends DCLogic {
       if (!stage || !stage.contains(e.target)) return;
       this._dragging = true;
       this._moved = false;
+      this._axisLock = null;
       this._lastX = e.clientX;
+      this._startX = e.clientX;
+      this._startY = e.clientY;
       document.body.style.cursor = 'grabbing';
     };
     this._move = (e) => {
       if (!this._dragging) return;
+      if (this._axisLock === null) {
+        const tx = Math.abs(e.clientX - this._startX);
+        const ty = Math.abs(e.clientY - this._startY);
+        if (tx < 6 && ty < 6) return;
+        this._axisLock = tx >= ty ? 'x' : 'y';
+        if (this._axisLock === 'y') { this._dragging = false; return; }
+      }
       const dx = e.clientX - this._lastX;
       this._lastX = e.clientX;
       if (Math.abs(dx) > 1) this._moved = true;
