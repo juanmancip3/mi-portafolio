@@ -50,12 +50,14 @@
       <div id="orbit-ring" style="position:absolute; inset:0; transform-style:preserve-3d; transform:translateY(-7%) rotateX(-12deg); transition:transform .4s cubic-bezier(.2,.7,.2,1);">
 
         <div class="orbit" onClick="{{ open1 }}" style="position:absolute; left:50%; top:50%; width:0; height:0; cursor:pointer; transform-style:preserve-3d; transform:rotateY(0deg) translateZ(290px);" data-r="290" data-phase="0">
-          <div class="orbit-face" style="position:absolute; left:0; top:0; width:clamp(250px,24vw,380px); height:clamp(330px,32vw,480px); transform-style:preserve-3d; transform:translate(-50%,-50%) rotateY(0deg);">
+          <div class="orbit-face" style="position:absolute; left:0; top:0; width:clamp(320px,32vw,480px); aspect-ratio:1920/1080; height:auto; transform-style:preserve-3d; transform:translate(-50%,-50%) rotateY(0deg);">
             <div class="tile-inner" style="width:100%; height:100%; position:relative; overflow:hidden; box-shadow:0 30px 70px rgba(20,22,28,0.32);">
               <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; background:rgba(20,22,28,0.12); color:rgba(20,22,28,0.55); font-size:13px; letter-spacing:0.05em; padding:14px;">Tu imagen o video · 01</div>
               <!-- ▼ TU CONTENIDO 01 -->
               <!-- IMAGEN: escribe el nombre del archivo en src="" del <img> de abajo, ej: src="branding.jpg" -->
-              <img id="img-branding" src="Kit de marca.png" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;">
+              <img id="img-branding" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;">
+              <!-- VIDEO (autoplay en mute): escribe el archivo en src="" del <video>, ej: src="branding.mp4" -->
+              <video id="media-branding" autoplay muted loop playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;"></video>
             </div>
             <div class="tile-label" style="position:absolute; top:calc(100% + 12px); left:0; right:0; text-align:center; color:#14161c; pointer-events:none; opacity:0; transition:opacity .35s;">
               <span style="font-size:clamp(14px,1.5vw,17px); font-weight:500;">{{ c1.name }}</span>
@@ -65,12 +67,14 @@
         </div>
 
         <div class="orbit" onClick="{{ open2 }}" style="position:absolute; left:50%; top:50%; width:0; height:0; cursor:pointer; transform-style:preserve-3d; transform:rotateY(72deg) translateZ(380px);" data-r="380" data-phase="72">
-          <div class="orbit-face" style="position:absolute; left:0; top:0; width:clamp(240px,23vw,340px); height:clamp(175px,16vw,240px); transform-style:preserve-3d; transform:translate(-50%,-50%) rotateY(-72deg);">
+          <div class="orbit-face" style="position:absolute; left:0; top:0; width:clamp(320px,30vw,460px); aspect-ratio:1351/599; height:auto; transform-style:preserve-3d; transform:translate(-50%,-50%) rotateY(-72deg);">
             <div class="tile-inner" style="width:100%; height:100%; position:relative; overflow:hidden; box-shadow:0 30px 70px rgba(20,22,28,0.32);">
               <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; background:rgba(20,22,28,0.12); color:rgba(20,22,28,0.55); font-size:13px; letter-spacing:0.05em; padding:14px;">Tu imagen o video · 02</div>
               <!-- ▼ TU CONTENIDO 02 -->
               <!-- IMAGEN: escribe el nombre del archivo en src="" del <img> de abajo, ej: src="web.jpg" -->
-              <img id="img-web" src="Adaptia web.png" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;">
+              <img id="img-web" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;">
+              <!-- VIDEO (autoplay en mute): escribe el archivo en src="" del <video>, ej: src="web.mp4" -->
+              <video id="media-web" autoplay muted loop playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;"></video>
             </div>
             <div class="tile-label" style="position:absolute; top:calc(100% + 12px); left:0; right:0; text-align:center; color:#14161c; pointer-events:none; opacity:0; transition:opacity .35s;">
               <span style="font-size:clamp(14px,1.5vw,17px); font-weight:500;">{{ c2.name }}</span>
@@ -80,12 +84,14 @@
         </div>
 
         <div class="orbit" onClick="{{ open3 }}" style="position:absolute; left:50%; top:50%; width:0; height:0; cursor:pointer; transform-style:preserve-3d; transform:rotateY(144deg) translateZ(250px);" data-r="250" data-phase="144">
-          <div class="orbit-face" style="position:absolute; left:0; top:0; width:clamp(310px,31vw,460px); height:clamp(205px,21vw,305px); transform-style:preserve-3d; transform:translate(-50%,-50%) rotateY(-144deg);">
+          <div class="orbit-face" style="position:absolute; left:0; top:0; width:clamp(200px,20vw,300px); aspect-ratio:1080/1920; height:auto; transform-style:preserve-3d; transform:translate(-50%,-50%) rotateY(-144deg);">
             <div class="tile-inner" style="width:100%; height:100%; position:relative; overflow:hidden; box-shadow:0 30px 70px rgba(20,22,28,0.32);">
               <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; background:rgba(20,22,28,0.12); color:rgba(20,22,28,0.55); font-size:13px; letter-spacing:0.05em; padding:14px;">Tu imagen o video · 03</div>
               <!-- ▼ TU CONTENIDO 03 -->
+              <!-- IMAGEN: escribe el nombre del archivo en src="" del <img> de abajo, ej: src="video.jpg" -->
+              <img id="img-video" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;">
               <!-- VIDEO (autoplay en mute): escribe el archivo en src="" del <video>, ej: src="video.mp4" -->
-              <video id="media-video" src="Video Final.mp4" autoplay muted loop playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;"></video>
+              <video id="media-video" autoplay muted loop playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;"></video>
             </div>
             <div class="tile-label" style="position:absolute; top:calc(100% + 12px); left:0; right:0; text-align:center; color:#14161c; pointer-events:none; opacity:0; transition:opacity .35s;">
               <span style="font-size:clamp(14px,1.5vw,17px); font-weight:500;">{{ c3.name }}</span>
@@ -95,12 +101,14 @@
         </div>
 
         <div class="orbit" onClick="{{ open4 }}" style="position:absolute; left:50%; top:50%; width:0; height:0; cursor:pointer; transform-style:preserve-3d; transform:rotateY(216deg) translateZ(350px);" data-r="350" data-phase="216">
-          <div class="orbit-face" style="position:absolute; left:0; top:0; width:clamp(270px,27vw,390px); height:clamp(185px,18vw,265px); transform-style:preserve-3d; transform:translate(-50%,-50%) rotateY(-216deg);">
+          <div class="orbit-face" style="position:absolute; left:0; top:0; width:clamp(190px,19vw,285px); aspect-ratio:1080/1920; height:auto; transform-style:preserve-3d; transform:translate(-50%,-50%) rotateY(-216deg);">
             <div class="tile-inner" style="width:100%; height:100%; position:relative; overflow:hidden; box-shadow:0 30px 70px rgba(20,22,28,0.32);">
               <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; background:rgba(20,22,28,0.12); color:rgba(20,22,28,0.55); font-size:13px; letter-spacing:0.05em; padding:14px;">Tu imagen o video · 04</div>
               <!-- ▼ TU CONTENIDO 04 -->
+              <!-- IMAGEN: escribe el nombre del archivo en src="" del <img> de abajo, ej: src="ia.jpg" -->
+              <img id="img-ia" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;">
               <!-- VIDEO (autoplay en mute): escribe el archivo en src="" del <video>, ej: src="ia.mp4" -->
-              <video id="media-ia" src="Video UGC.mp4" autoplay muted loop playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;"></video>
+              <video id="media-ia" autoplay muted loop playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;"></video>
             </div>
             <div class="tile-label" style="position:absolute; top:calc(100% + 12px); left:0; right:0; text-align:center; color:#14161c; pointer-events:none; opacity:0; transition:opacity .35s;">
               <span style="font-size:clamp(14px,1.5vw,17px); font-weight:500;">{{ c4.name }}</span>
@@ -110,12 +118,14 @@
         </div>
 
         <div class="orbit" onClick="{{ open5 }}" style="position:absolute; left:50%; top:50%; width:0; height:0; cursor:pointer; transform-style:preserve-3d; transform:rotateY(288deg) translateZ(420px);" data-r="420" data-phase="288">
-          <div class="orbit-face" style="position:absolute; left:0; top:0; width:clamp(215px,20vw,300px); height:clamp(265px,26vw,385px); transform-style:preserve-3d; transform:translate(-50%,-50%) rotateY(-288deg);">
+          <div class="orbit-face" style="position:absolute; left:0; top:0; width:clamp(190px,19vw,285px); aspect-ratio:1080/1920; height:auto; transform-style:preserve-3d; transform:translate(-50%,-50%) rotateY(-288deg);">
             <div class="tile-inner" style="width:100%; height:100%; position:relative; overflow:hidden; box-shadow:0 30px 70px rgba(20,22,28,0.32);">
               <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; background:rgba(20,22,28,0.12); color:rgba(20,22,28,0.55); font-size:13px; letter-spacing:0.05em; padding:14px;">Tu imagen o video · 05</div>
               <!-- ▼ TU CONTENIDO 05 -->
+              <!-- IMAGEN: escribe el nombre del archivo en src="" del <img> de abajo, ej: src="contenido.jpg" -->
+              <img id="img-social" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;">
               <!-- VIDEO (autoplay en mute): escribe el archivo en src="" del <video>, ej: src="contenido.mp4" -->
-              <video id="media-social" src="Video Community.mp4" autoplay muted loop playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;"></video>
+              <video id="media-social" autoplay muted loop playsinline style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;"></video>
             </div>
             <div class="tile-label" style="position:absolute; top:calc(100% + 12px); left:0; right:0; text-align:center; color:#14161c; pointer-events:none; opacity:0; transition:opacity .35s;">
               <span style="font-size:clamp(14px,1.5vw,17px); font-weight:500;">{{ c5.name }}</span>
