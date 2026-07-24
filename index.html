@@ -14,10 +14,10 @@
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; max-width: 100%; }
-  body { background: #838DA4; font-family: 'Space Grotesk', system-ui, sans-serif; color: #14161c; -webkit-font-smoothing: antialiased; }
+  body { background: #A5B2D6; font-family: 'Space Grotesk', system-ui, sans-serif; color: #14161c; -webkit-font-smoothing: antialiased; }
   a { color: #14161c; text-decoration: none; }
   a:hover { color: #ffffff; }
-  ::selection { background: #14161c; color: #838DA4; }
+  ::selection { background: #14161c; color: #A5B2D6; }
   @keyframes orbit1 { from{ transform:rotateY(0deg) translateZ(250px) rotateY(0deg) translate(-50%,-50%) } to{ transform:rotateY(360deg) translateZ(250px) rotateY(-360deg) translate(-50%,-50%) } }
   @keyframes orbit2 { from{ transform:rotateY(0deg) translateZ(330px) rotateY(0deg) translate(-50%,-50%) } to{ transform:rotateY(360deg) translateZ(330px) rotateY(-360deg) translate(-50%,-50%) } }
   @keyframes orbit3 { from{ transform:rotateY(0deg) translateZ(200px) rotateY(0deg) translate(-50%,-50%) } to{ transform:rotateY(360deg) translateZ(200px) rotateY(-360deg) translate(-50%,-50%) } }
@@ -41,7 +41,7 @@
 </style>
 </helmet>
 
-<div style="min-height:100vh; background:#838DA4; padding:0 clamp(20px,5vw,64px); overflow-x:hidden; max-width:100%;">
+<div style="min-height:100vh; background:#A5B2D6; padding:0 clamp(20px,5vw,64px); overflow-x:hidden; max-width:100%;">
 
   <header style="display:flex; align-items:center; justify-content:space-between; padding:28px 0; position:sticky; top:0; background:transparent; z-index:20;">
     <a href="#" onClick="{{ goHome }}" style="font-size:15px; letter-spacing:0.02em; font-weight:500;">juan diego mancipe<span style="opacity:0.55;">.</span></a>
@@ -156,9 +156,9 @@
       <p style="max-width:620px; font-size:16px; line-height:1.45; opacity:0.85; margin:0; text-wrap:pretty;">{{ active.desc }}</p>
     </div>
 
-    <div style="column-width:clamp(200px,22vw,290px); column-count:auto; column-gap:clamp(12px,1.6vw,22px);">
+    <div style="column-width:clamp(240px,26vw,360px); column-count:auto; column-gap:clamp(12px,1.6vw,22px);">
       <sc-for list="{{ active.gallery }}" as="g" hint-placeholder-count="6">
-        <a href="{{ g.behance }}" target="_blank" style="display:block; position:relative; break-inside:avoid; margin-bottom:clamp(12px,1.6vw,22px); overflow:hidden; background:rgba(20,22,28,0.08); min-height:120px; cursor:pointer;">
+        <a href="{{ g.behance }}" target="_blank" class="gal-item" style="display:block; position:relative; break-inside:avoid; margin:0 auto clamp(12px,1.6vw,22px); overflow:hidden; background:rgba(20,22,28,0.08); min-height:120px; cursor:pointer;">
           <sc-if value="{{ g.isImg }}" hint-placeholder-val="{{ true }}">
             <img src="{{ g.src }}" style="width:100%; height:auto; display:block;">
           </sc-if>
@@ -179,7 +179,7 @@
   <!-- ABOUT / CONTACT overlay -->
   <sc-if value="{{ aboutOpen }}" hint-placeholder-val="{{ false }}">
   <div onClick="{{ toggleAbout }}" style="position:fixed; inset:0; background:rgba(20,22,28,0.55); z-index:40; display:flex; justify-content:flex-end;">
-    <aside onClick="{{ stop }}" style="width:min(520px,100%); height:100%; background:#838DA4; padding:clamp(28px,5vw,56px); overflow-y:auto; box-shadow:-30px 0 80px rgba(20,22,28,0.3);">
+    <aside onClick="{{ stop }}" style="width:min(520px,100%); height:100%; background:#A5B2D6; padding:clamp(28px,5vw,56px); overflow-y:auto; box-shadow:-30px 0 80px rgba(20,22,28,0.3);">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
         <span style="font-size:13px; letter-spacing:0.14em; text-transform:uppercase; opacity:0.7;">{{ t.about }}</span>
         <button onClick="{{ toggleAbout }}" style="font-family:inherit; font-size:20px; background:none; border:none; color:#14161c; cursor:pointer;">✕</button>
@@ -308,7 +308,10 @@ class Component extends DCLogic {
     return s;
   }
 
-  open(i) { this.setState({ view: 'project', active: i }); window.scrollTo(0, 0); setTimeout(() => this._muteVideos(), 60); setTimeout(() => this._muteVideos(), 400); }
+  _stopAll() {
+    document.querySelectorAll('video').forEach(v => { v.muted = true; v.volume = 0; try { v.pause(); } catch (e) {} });
+  }
+  open(i) { this._stopAll(); this.setState({ view: 'project', active: i }); window.scrollTo(0, 0); setTimeout(() => this._muteVideos(), 60); setTimeout(() => this._muteVideos(), 400); }
 
   _angle = 0;
   _dragOffset = 0;
@@ -323,9 +326,38 @@ class Component extends DCLogic {
       if (p && p.catch) p.catch(() => {});
     });
   }
+  _hardMute = (e) => {
+    const v = e.target;
+    if (v && v.tagName === 'VIDEO') { v.muted = true; v.volume = 0; }
+  }
+  _fitMedia() {
+    document.querySelectorAll('.gal-item').forEach(a => {
+      const m = a.querySelector('img, video');
+      if (!m) return;
+      const w = m.tagName === 'VIDEO' ? m.videoWidth : m.naturalWidth;
+      const h = m.tagName === 'VIDEO' ? m.videoHeight : m.naturalHeight;
+      if (!w || !h) return;
+      const r = w / h;
+      // horizontal más grande, vertical más pequeño
+      a.style.width = r > 1.15 ? '100%' : (r < 0.85 ? '62%' : '80%');
+    });
+  }
+  _watchMedia() {
+    document.querySelectorAll('.gal-item img, .gal-item video').forEach(m => {
+      if (m.dataset.fitBound) return;
+      m.dataset.fitBound = '1';
+      m.addEventListener('load', () => this._fitMedia());
+      m.addEventListener('loadedmetadata', () => this._fitMedia());
+    });
+    this._fitMedia();
+  }
   componentDidMount() {
     this._muteVideos();
     setTimeout(() => this._muteVideos(), 400);
+    document.addEventListener('play', this._hardMute, true);
+    document.addEventListener('volumechange', this._hardMute, true);
+    document.addEventListener('loadeddata', this._hardMute, true);
+    this._watchMedia();
     this._last = performance.now();
     const tick = (now) => {
       const dt = Math.min((now - this._last) / 1000, 0.05);
@@ -380,8 +412,12 @@ class Component extends DCLogic {
     window.addEventListener('pointermove', this._move);
     window.addEventListener('pointerup', this._up);
   }
+  componentDidUpdate() { this._muteVideos(); this._watchMedia(); }
   componentWillUnmount() {
     if (this._raf) cancelAnimationFrame(this._raf);
+    document.removeEventListener('play', this._hardMute, true);
+    document.removeEventListener('volumechange', this._hardMute, true);
+    document.removeEventListener('loadeddata', this._hardMute, true);
     window.removeEventListener('pointerdown', this._down);
     window.removeEventListener('pointermove', this._move);
     window.removeEventListener('pointerup', this._up);
@@ -416,7 +452,7 @@ class Component extends DCLogic {
       open3: () => this.tryOpen(2),
       open4: () => this.tryOpen(3),
       open5: () => this.tryOpen(4),
-      goHome: (e) => { if (e) e.preventDefault(); this.setState({ view: 'home', aboutOpen: false }); window.scrollTo(0, 0); setTimeout(() => this._muteVideos(), 60); setTimeout(() => this._muteVideos(), 400); },
+      goHome: (e) => { if (e) e.preventDefault(); this._stopAll(); this.setState({ view: 'home', aboutOpen: false }); window.scrollTo(0, 0); setTimeout(() => this._muteVideos(), 60); setTimeout(() => this._muteVideos(), 400); },
       toggleLang: () => this.setState(s => ({ lang: s.lang === 'es' ? 'en' : 'es' })),
       toggleAbout: (e) => { if (e) e.preventDefault(); this.setState(s => ({ aboutOpen: !s.aboutOpen })); },
       stop: (e) => e.stopPropagation()
