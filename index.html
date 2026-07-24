@@ -156,9 +156,9 @@
       <p style="max-width:620px; font-size:16px; line-height:1.45; opacity:0.85; margin:0; text-wrap:pretty;">{{ active.desc }}</p>
     </div>
 
-    <div style="column-width:clamp(240px,26vw,360px); column-count:auto; column-gap:clamp(12px,1.6vw,22px);">
+    <div style="display:flex; flex-wrap:wrap; align-items:flex-start; gap:clamp(12px,1.6vw,22px);">
       <sc-for list="{{ active.gallery }}" as="g" hint-placeholder-count="6">
-        <a href="{{ g.behance }}" target="_blank" class="gal-item" style="display:block; position:relative; break-inside:avoid; margin:0 auto clamp(12px,1.6vw,22px); overflow:hidden; background:rgba(20,22,28,0.08); min-height:120px; cursor:pointer;">
+        <a href="{{ g.behance }}" target="_blank" class="gal-item" style="display:block; position:relative; width:clamp(240px,25vw,420px); overflow:hidden; background:rgba(20,22,28,0.08); cursor:pointer;">
           <sc-if value="{{ g.isImg }}" hint-placeholder-val="{{ true }}">
             <img src="{{ g.src }}" style="width:100%; height:auto; display:block;">
           </sc-if>
@@ -338,8 +338,10 @@ class Component extends DCLogic {
       const h = m.tagName === 'VIDEO' ? m.videoHeight : m.naturalHeight;
       if (!w || !h) return;
       const r = w / h;
-      // horizontal más grande, vertical más pequeño
-      a.style.width = r > 1.15 ? '100%' : (r < 0.85 ? '62%' : '80%');
+      // horizontal más grande, vertical más compacto
+      a.style.width = r > 1.15
+        ? 'clamp(320px,42vw,760px)'
+        : (r < 0.85 ? 'clamp(170px,17vw,280px)' : 'clamp(240px,25vw,420px)');
     });
   }
   _watchMedia() {
