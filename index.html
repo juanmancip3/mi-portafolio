@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
+  html, body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; max-width: 100%; }
   body { background: #838DA4; font-family: 'Space Grotesk', system-ui, sans-serif; color: #14161c; -webkit-font-smoothing: antialiased; }
   a { color: #14161c; text-decoration: none; }
   a:hover { color: #ffffff; }
@@ -32,14 +32,16 @@
   video:not([src]) { display: none !important; }
   video[src] + span, img[src] ~ span { display: none !important; }
   @media (max-width: 640px) {
-    header { flex-direction: column; gap: 10px; text-align: center; }
-    header nav { flex-wrap: wrap; justify-content: center; }
+    header { flex-direction: row; align-items: center; gap: 10px; text-align: left; }
+    header > a:first-child { flex: 0 0 auto; font-size: 13px; }
+    header nav { flex-wrap: nowrap; justify-content: flex-end; gap: 12px; font-size: 12px; }
+    header nav button { padding: 4px 10px; font-size: 11px; }
     #orbit-ring { transform: translateY(-4%) rotateX(-12deg) scale(0.62) !important; }
   }
 </style>
 </helmet>
 
-<div style="min-height:100vh; background:#838DA4; padding:0 clamp(20px,5vw,64px);">
+<div style="min-height:100vh; background:#838DA4; padding:0 clamp(20px,5vw,64px); overflow-x:hidden; max-width:100%;">
 
   <header style="display:flex; align-items:center; justify-content:space-between; padding:28px 0; position:sticky; top:0; background:transparent; z-index:20;">
     <a href="#" onClick="{{ goHome }}" style="font-size:15px; letter-spacing:0.02em; font-weight:500;">juan diego mancipe<span style="opacity:0.55;">.</span></a>
@@ -54,7 +56,7 @@
   <!-- HOME -->
   <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
   <main style="padding:0;">
-    <div id="orbit-stage" style="position:relative; width:100%; height:clamp(640px,88vh,1000px); perspective:1600px; perspective-origin:50% 50%; cursor:grab; touch-action:pan-y; user-select:none;">
+    <div id="orbit-stage" style="position:relative; width:100%; max-width:100%; height:clamp(640px,88vh,1000px); perspective:1600px; perspective-origin:50% 50%; cursor:grab; touch-action:pan-y; user-select:none;">
       <div id="orbit-ring" style="position:absolute; inset:0; transform-style:preserve-3d; transform:translateY(-7%) rotateX(-12deg); transition:transform .4s cubic-bezier(.2,.7,.2,1);">
 
         <div class="orbit" onClick="{{ open1 }}" style="position:absolute; left:50%; top:50%; width:0; height:0; cursor:pointer; transform-style:preserve-3d; transform:rotateY(0deg) translateZ(290px);" data-r="290" data-phase="0">
@@ -193,7 +195,7 @@
   </div>
   </sc-if>
 
-  <footer style="border-top:1px solid rgba(20,22,28,0.28); padding:28px 0 40px; display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; font-size:13px; opacity:0.75;">
+  <footer style="border-top:1px solid rgba(20,22,28,0.28); margin-top:clamp(32px,6vw,72px); padding:28px 0 40px; display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; font-size:13px; opacity:0.75;">
     <span>© 2026 Juan Diego Mancipe · Bogotá, Colombia</span>
     <span>{{ t.available }}</span>
   </footer>
