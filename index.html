@@ -156,7 +156,7 @@
       <p style="max-width:420px; font-size:16px; line-height:1.45; opacity:0.85; margin:0; text-wrap:pretty;">{{ active.desc }}</p>
     </div>
 
-    <div style="column-count:2; column-gap:clamp(12px,1.6vw,22px);">
+    <div style="column-width:clamp(200px,22vw,290px); column-count:auto; column-gap:clamp(12px,1.6vw,22px);">
       <sc-for list="{{ active.gallery }}" as="g" hint-placeholder-count="6">
         <a href="{{ g.behance }}" target="_blank" style="display:block; position:relative; break-inside:avoid; margin-bottom:clamp(12px,1.6vw,22px); overflow:hidden; background:rgba(20,22,28,0.08); min-height:120px; cursor:pointer;">
           <sc-if value="{{ g.isImg }}" hint-placeholder-val="{{ true }}">
@@ -309,12 +309,12 @@ class Component extends DCLogic {
     return s;
   }
 
-  open(i) { this.setState({ view: 'project', active: i }); window.scrollTo(0, 0); }
+  open(i) { this.setState({ view: 'project', active: i }); window.scrollTo(0, 0); setTimeout(() => this._muteVideos(), 60); setTimeout(() => this._muteVideos(), 400); }
 
   _angle = 0;
   _dragOffset = 0;
   _muteVideos() {
-    document.querySelectorAll('.tile-inner video').forEach(v => {
+    document.querySelectorAll('video').forEach(v => {
       v.muted = true;
       v.defaultMuted = true;
       v.volume = 0;
