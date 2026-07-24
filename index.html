@@ -158,19 +158,20 @@
 
     <div style="column-count:2; column-gap:clamp(12px,1.6vw,22px);">
       <sc-for list="{{ active.gallery }}" as="g" hint-placeholder-count="6">
-        <div style="position:relative; break-inside:avoid; margin-bottom:clamp(12px,1.6vw,22px); overflow:hidden; background:rgba(20,22,28,0.08); min-height:120px;">
-          <!-- IMAGEN: escribe el archivo en src="" del <img>. La celda se adapta sola al tamaño. -->
-          <img id="{{ g.imgId }}" style="width:100%; height:auto; display:block;">
-          <!-- VIDEO: escribe el archivo en src="" del <video>. La celda se adapta sola al tamaño. -->
-          <video id="{{ g.vidId }}" muted loop playsinline preload="metadata" style="width:100%; height:auto; display:block;"></video>
-          <span style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; color:rgba(20,22,28,0.5); font-size:13px; letter-spacing:0.05em; padding:14px; pointer-events:none;">{{ g.ph }}</span>
-          <a href="https://www.behance.net/juandiegomancipe" target="_blank" style="position:absolute; top:16px; right:16px; display:inline-flex; align-items:center; gap:6px; font-size:13px; letter-spacing:0.04em; background:rgba(255,255,255,0.92); color:#14161c; padding:8px 14px; border-radius:999px; z-index:5;">{{ t.viewBehance }} ↗</a>
-        </div>
+        <a href="{{ g.behance }}" target="_blank" style="display:block; position:relative; break-inside:avoid; margin-bottom:clamp(12px,1.6vw,22px); overflow:hidden; background:rgba(20,22,28,0.08); min-height:120px; cursor:pointer;">
+          <sc-if value="{{ g.isImg }}" hint-placeholder-val="{{ true }}">
+            <img src="{{ g.src }}" style="width:100%; height:auto; display:block;">
+          </sc-if>
+          <sc-if value="{{ g.isVid }}" hint-placeholder-val="{{ false }}">
+            <video src="{{ g.src }}" autoplay muted loop playsinline preload="metadata" style="width:100%; height:auto; display:block;"></video>
+          </sc-if>
+          <span style="position:absolute; top:16px; right:16px; display:inline-flex; align-items:center; gap:6px; font-size:13px; letter-spacing:0.04em; background:rgba(255,255,255,0.92); color:#14161c; padding:8px 14px; border-radius:999px; z-index:5;">{{ t.viewBehance }} ↗</span>
+        </a>
       </sc-for>
     </div>
 
     <div style="text-align:center; margin-top:clamp(40px,7vw,80px);">
-      <a href="https://www.behance.net/juandiegomancipe" target="_blank" style="display:inline-block; font-size:16px; border:1px solid rgba(20,22,28,0.4); border-radius:999px; padding:14px 30px;">{{ t.fullBehance }} ↗</a>
+      <a href="{{ active.behance }}" target="_blank" style="display:inline-block; font-size:16px; border:1px solid rgba(20,22,28,0.4); border-radius:999px; padding:14px 30px;">{{ t.fullBehance }} ↗</a>
     </div>
   </main>
   </sc-if>
@@ -215,7 +216,16 @@ class Component extends DCLogic {
           es: 'Identidades coherentes: del concepto al sistema visual listo para aplicar — logo, paleta, dirección de arte y guías.',
           en: 'Coherent identities: from concept to a ready-to-apply visual system — logo, palette, art direction and guidelines.'
         },
-        key: 'branding'
+        key: 'branding',
+        // 👇 Proyectos de esta categoría. Uno por bloque { ... }.
+        //    Cada proyecto tiene su propia imagen/video Y su propio link de Behance.
+        //    Imagen -> { src:'archivo.jpg', behance:'URL' }
+        //    Video  -> { src:'archivo.mp4', video:true, behance:'URL' }
+        media: [
+          { src: 'Kit de marca.png', behance: 'https://www.behance.net/juandiegomancipe' },
+          { src: 'branding-2.jpg',   behance: 'https://www.behance.net/juandiegomancipe' },
+          { src: 'branding-3.jpg',   behance: 'https://www.behance.net/juandiegomancipe' },
+        ]
       },
       {
         no: '02',
@@ -224,7 +234,12 @@ class Component extends DCLogic {
           es: 'Interfaces y sitios claros y centrados en las personas: landing pages, research, prototipos y sistemas de diseño en Figma.',
           en: 'Clear, people-centered interfaces and sites: landing pages, research, prototypes and design systems in Figma.'
         },
-        key: 'web'
+        key: 'web',
+        media: [
+          { src: 'Adaptia web.png', behance: 'https://www.behance.net/juandiegomancipe' },
+          { src: 'web-2.jpg',       behance: 'https://www.behance.net/juandiegomancipe' },
+          { src: 'web-3.jpg',       behance: 'https://www.behance.net/juandiegomancipe' },
+        ]
       },
       {
         no: '03',
@@ -233,7 +248,12 @@ class Component extends DCLogic {
           es: 'Video de principio a fin: concepto, guion, rodaje o generación con IA, edición, color y motion para redes y marcas.',
           en: 'Video end to end: concept, script, shooting or AI generation, editing, color and motion for social and brands.'
         },
-        key: 'video'
+        key: 'video',
+        media: [
+          { src: 'Video Final.mp4', video: true, behance: 'https://www.behance.net/juandiegomancipe' },
+          { src: 'video-2.mp4',     video: true, behance: 'https://www.behance.net/juandiegomancipe' },
+          { src: 'video-3.mp4',     video: true, behance: 'https://www.behance.net/juandiegomancipe' },
+        ]
       },
       {
         no: '04',
@@ -242,7 +262,12 @@ class Component extends DCLogic {
           es: 'IA aplicada a la creación con criterio: imagen, video y producto con Midjourney, Runway, Veo, Flow y prompt engineering.',
           en: 'Generative AI applied with judgment: image, video and product with Midjourney, Runway, Veo, Flow and prompt engineering.'
         },
-        key: 'ia'
+        key: 'ia',
+        media: [
+          { src: 'Video UGC.mp4', video: true, behance: 'https://www.behance.net/juandiegomancipe' },
+          { src: 'ia-2.jpg',                   behance: 'https://www.behance.net/juandiegomancipe' },
+          { src: 'ia-3.mp4',      video: true, behance: 'https://www.behance.net/juandiegomancipe' },
+        ]
       },
       {
         no: '05',
@@ -251,7 +276,12 @@ class Component extends DCLogic {
           es: 'Presencia digital de marca: estrategia, parrillas, copy, community management y lectura de métricas para crecer.',
           en: 'Brand digital presence: strategy, content calendars, copy, community management and metrics to grow.'
         },
-        key: 'social'
+        key: 'social',
+        media: [
+          { src: 'Video Edicion.mp4', video: true, behance: 'https://www.behance.net/juandiegomancipe' },
+          { src: 'social-2.jpg',                   behance: 'https://www.behance.net/juandiegomancipe' },
+          { src: 'social-3.jpg',                   behance: 'https://www.behance.net/juandiegomancipe' },
+        ]
       }
     ];
     return cats;
@@ -366,10 +396,13 @@ class Component extends DCLogic {
       no: c.no,
       name: c.name[lang],
       desc: c.desc[lang],
-      gallery: [1, 2, 3, 4, 5, 6].map(n => ({
-        imgId: 'gimg-' + c.key + '-' + n,
-        vidId: 'gvid-' + c.key + '-' + n,
-        ph: c.name[lang] + ' — ' + n
+      behance: c.behance || 'https://www.behance.net/juandiegomancipe',
+      gallery: (c.media || []).map((m, i) => ({
+        src: m.src,
+        isImg: !m.video,
+        isVid: !!m.video,
+        behance: m.behance || c.behance || 'https://www.behance.net/juandiegomancipe',
+        ph: c.name[lang] + ' — ' + (i + 1)
       }))
     }));
     return {
