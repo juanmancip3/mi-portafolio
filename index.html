@@ -14,11 +14,11 @@
 <style>
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; overflow-x: hidden; width: 100%; max-width: 100%; }
-  body { background: #A3B4E0; font-family: 'Space Grotesk', system-ui, sans-serif; color: #14161c; -webkit-font-smoothing: antialiased; }
+  body { background: #9ebce4; font-family: 'Space Grotesk', system-ui, sans-serif; color: #14161c; -webkit-font-smoothing: antialiased; }
   body::after { content: none; }
   a { color: #14161c; text-decoration: none; }
   a:hover { color: #ffffff; }
-  ::selection { background: #14161c; color: #A3B4E0; }
+  ::selection { background: #14161c; color: #9ebce4; }
   @keyframes orbit1 { from{ transform:rotateY(0deg) translateZ(250px) rotateY(0deg) translate(-50%,-50%) } to{ transform:rotateY(360deg) translateZ(250px) rotateY(-360deg) translate(-50%,-50%) } }
   @keyframes orbit2 { from{ transform:rotateY(0deg) translateZ(330px) rotateY(0deg) translate(-50%,-50%) } to{ transform:rotateY(360deg) translateZ(330px) rotateY(-360deg) translate(-50%,-50%) } }
   @keyframes orbit3 { from{ transform:rotateY(0deg) translateZ(200px) rotateY(0deg) translate(-50%,-50%) } to{ transform:rotateY(360deg) translateZ(200px) rotateY(-360deg) translate(-50%,-50%) } }
@@ -42,7 +42,7 @@
 </style>
 </helmet>
 
-<div style="min-height:100vh; background:#A3B4E0; padding:0 clamp(20px,5vw,64px); overflow-x:hidden; max-width:100%;">
+<div style="min-height:100vh; background:#9ebce4; padding:0 clamp(20px,5vw,64px); overflow-x:hidden; max-width:100%;">
 
   <div aria-hidden="true" style="position:fixed; inset:0; z-index:9998; pointer-events:none; opacity:0.05; background-image:url('grain.png'); background-repeat:repeat; background-size:256px 256px;"></div>
 
@@ -182,7 +182,7 @@
   <!-- ABOUT / CONTACT overlay -->
   <sc-if value="{{ aboutOpen }}" hint-placeholder-val="{{ false }}">
   <div onClick="{{ toggleAbout }}" style="position:fixed; inset:0; background:rgba(20,22,28,0.55); z-index:40; display:flex; justify-content:flex-end;">
-    <aside onClick="{{ stop }}" style="width:min(520px,100%); height:100%; background:#A3B4E0; padding:clamp(28px,5vw,56px); overflow-y:auto; box-shadow:-30px 0 80px rgba(20,22,28,0.3);">
+    <aside onClick="{{ stop }}" style="width:min(520px,100%); height:100%; background:#9ebce4; padding:clamp(28px,5vw,56px); overflow-y:auto; box-shadow:-30px 0 80px rgba(20,22,28,0.3);">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
         <span style="font-size:13px; letter-spacing:0.14em; text-transform:uppercase; opacity:0.7;">{{ t.about }}</span>
         <button onClick="{{ toggleAbout }}" style="font-family:inherit; font-size:20px; background:none; border:none; color:#14161c; cursor:pointer;">✕</button>
